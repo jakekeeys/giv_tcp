@@ -7,6 +7,7 @@ class GiV_Settings:
     Debug_File_Location=""          #Optional - Location of logs (Default is console)
     Print_Raw_Registers="True"      #Optional - "True" publishes all available registers.
 #MQTT Output Settings
+    HA_DISCOVERY=""                 #True or False
     MQTT_Output=""                  #True or False
     MQTT_Address=""                 #IP address of MQTT broker (local or remote)
     MQTT_Username=""                #Optional - Username for MQTT broker

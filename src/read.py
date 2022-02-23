@@ -381,7 +381,8 @@ def runAll():
 def publishOutput(array,SN):
     tempoutput={}
     tempoutput=iterate_dict(array)
-    HAMQTT.publish_discovery(tempoutput,SN)
+    if GiV_Settings.HA_DISCOVERY.lower()=="true":
+        HAMQTT.publish_discovery(tempoutput,SN)
     if GiV_Settings.MQTT_Output.lower()=="true":
         from mqtt import GivMQTT
         logger.info("Publish all to MQTT")
