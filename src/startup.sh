@@ -35,6 +35,7 @@ else
     fi
     printf "    numBatteries=\"$NUM_BATTERIES\"\n" >> settings.py
     printf "    Print_Raw_Registers=\"$PRINT_RAW\"\n" >> settings.py
+    printf "    HA_DISCOVERY=\"$HA_DISCOVERY\"\n" >> settings.py
     printf "    MQTT_Output=\"$MQTT_OUTPUT\"\n" >> settings.py
     printf "    MQTT_Address=\"$MQTT_ADDRESS\"\n" >> settings.py
     printf "    MQTT_Username=\"$MQTT_USERNAME\"\n" >> settings.py
