@@ -98,13 +98,8 @@ def runAll():
         else:
             energy_total_output['Load Energy Total kWh']=(energy_total_output['Invertor Energy Total kWh']-energy_total_output['AC Charge Energy Total kWh'])-(energy_total_output['Export Energy Total kWh']-energy_total_output['Import Energy Total kWh'])+energy_total_output['PV Energy Total kWh']
 
-        if GEInv.e_battery_charge_total==0 and GEInv.e_battery_discharge_total==0:        #If no values in "nomal" registers then grab from battery
-            energy_total_output['Battery Charge Energy Total kWh']=GEBat.e_battery_charge_total_2
-            energy_total_output['Battery Discharge Energy Total kWh']=GEBat.e_battery_discharge_total_2
-        else:
-            energy_total_output['Battery Charge Energy Total kWh']=GEInv.e_battery_charge_total
-            energy_total_output['Battery Discharge Energy Total kWh']=GEInv.e_battery_discharge_total
-
+        energy_total_output['Battery Charge Energy Total kWh']=GEInv.e_battery_charge_total
+        energy_total_output['Battery Discharge Energy Total kWh']=GEInv.e_battery_discharge_total
         energy_total_output['Self Consumption Energy Total kWh']=energy_total_output['PV Energy Total kWh']-energy_total_output['Export Energy Total kWh']
 
 #Energy Today Figures
