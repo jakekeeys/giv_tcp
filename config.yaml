@@ -1,7 +1,7 @@
 name:  "GivTCP-DEV"
 description:  "Dev Branch of TCP Modbus connection to MQTT/JSON for Givenergy Battery/PV Invertors"
-version:  "1.1.8"
-image: britkat/giv_tcp-ma
+version:  "2022.08.31"
+image: britkat/giv_tcp-dev
 slug:  "givtcp"
 init:  true
 map:
