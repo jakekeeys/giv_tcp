@@ -18,20 +18,29 @@ This will set up a self-running service which will publish data as required and 
 * Out of the box the default setup enables local MQTT broker and REST service (see below for details)
 * For Invertor autodiscovery to function your container must run on the "Host" network within docker (not Bridge). If it fails then you will need to manually add in INVERTOR_IP to the env variables
 
+## Home Assistant Add-on
+This container can also be used as an add-on in Home Assistant.
+The add-on requires an existing MQTT broker such as Mosquitto, also available to install from the Add-on store.
+To install GivTCP as an add-on, add this repository (https://github.com/britkat1980/giv_tcp) to the Add-on Store repository list.
+The following configuration items are mandatory before the add-on can be started:
+* Inverter IP address
+* MQTT username (can also be a Home Assistant user - used to authenticate againt your MQTT broker)
+* MQTT password
+All other configuration items can be left as-is unless you need to change them.
+
 ### Installation
 The simplist installation method for GivTCP is to use the built-in self-run option which will automatically connect to your invertor and grab the data.
 
 1. Install docker on a suitable machine which is "always on" in your network.
 2. Open up your docker interface (I prefer portainer https://www.portainer.io/)
-3. Navigate to "Containers" and click "add container"
-4. search for the GivTCP docker image using this tag: "giv_tcp-ma:latest"
+3. Navigate to "Stacks" and click "Add Stack"
+4. Copy the contents of the docker-compose.yml file in this repo into the web editor pane
 5. Scoll down to the "Advanced container settings" and select the Env tab
-6. Add in the following ENV:
-   1. INVERTOR_IP=<ip_of_your_invertor>
-   2. See the below table for other optional variables which you can also use. (after deploying these container these will all appear in the container config)
-7. If you don't know your invertor IP you can leave this blank and the container will attempt to find your invertor on the network. If this fails you wll need to add the IP address in manually for this to work.
-8. Set the Network to "Host"
-9. Deploy the container
+6. Edit any settings you wish. Specifically the INVERTOR_IP
+   1. See the below table for other optional variables which you can also use.
+7. Deploy the container
+
+Alternatively you can run the container from the command line by downloading the docker-compose.yml file, modifying it and then run the following commmand in the same file location: "docker-compose up".
 
 Once this has been done the container should start-up and begin publishing data to its internal MQTT broker. You can test this by using an MQTT client, such as MQTT Explorer(http://mqtt-explorer.com/) and connect using the IP address of the machine you are running docker on.
 
@@ -41,8 +50,9 @@ From here your invertor data is available through either MQTT or REST as describ
 
 | ENV Name                | Example       |  Description                      |
 | ----------------------- | ------------- |  -------------------------------- |
-| INVERTOR_IP |192.168.10.1 | Docker container can auto detect Invertors if running on your host network. If this fails then add the IP manually to this ENV |
-| NUMBATTERIES | 1 | Number of battery units connected to the invertor |
+| NUMINVERTORS | 1 | Number of invertors on the network. Currently reserved for future development. Leave it at 1 |
+| INVERTOR_IP_1 |192.168.10.1 | Docker container can auto detect Invertors if running on your host network. If this fails then add the IP manually to this ENV |
+| NUMBATTERIES_1 | 1 | Number of battery units connected to the invertor |
 | MQTT_OUTPUT | True | Optional if set to True then MQTT_ADDRESS is required |
 | MQTT_ADDRESS | 127.0.0.1 | Optional (but required if OUTPUT is set to MQTT) |
 | MQTT_USERNAME | bob | Optional |
@@ -51,11 +61,22 @@ From here your invertor data is available through either MQTT or REST as describ
 | LOG_LEVEL | Error | Optional - you can choose Error, Info or Debug. Output will be sent to the debug file location if specified, otherwise it is sent to stdout|
 | DEBUG_FILE_LOCATION | /usr/pi/data | Optional  |
 | PRINT_RAW | False | Optional - If set to True the raw register values will be returned alongside the normal data |
+| SELF_RUN | True | Optional - If set to True the system will loop round connecting to invertor and publishing its data |
+| SELF_RUN_LOOP_TIMER | 5 | Optional - The wait time bewtween invertor calls when using SELF_RUN |
 | INFLUX_OUTPUT | False | Optional - Used to enable publishing of energy and power data to influx |
 | INFLUX_TOKEN |abcdefg123456789| Optional - If using influx this is the token generated from within influxdb itself |
 | INFLUX_BUCKET |giv_bucket| Optional - If using influx this is data bucket to use|
 | INFLUX_ORG |giv_tcp| Optional - If using influx this is the org that the token is assigned to | 
 | HA_AUTO_D | True | Optional - If set to true and MQTT is enabled, it will publish Home Assistant Auto Discovery messages, which will allow Home Assistant to automagically create all entitites and devices to allow read and control of your Invertor |
+| HADEVICEPREFIX | GivTCP | Optional - Prefix to be placed in front of every Home Assistent entity created by the above |
+| DAYRATE | 0.155 | Optional - Cost of your daytime energy if using Economy 7 or Octopus Go |
+| NIGHTRATE | 0.155 | Optional - Cost of your night time energy if using Economy 7 or Octopus Go |
+| DAYRATESTART | 04:30 | Optional - Start time of your daytime energy if using Economy 7 or Octopus Go |
+| NIGHTRATESTART | 00:00 | Optional - Start time of your night time energy if using Economy 7 or Octopus Go |
+| HOSTIP | 192.168.1.20 | Optional - The host IP address of your container. Required to access the web dashboard from any browser |
+
+
+
 
 ## GivTCP Read data
 

@@ -1,25 +1,28 @@
 # version 2022.01.31
 from influxdb_client import InfluxDBClient, WriteApi, WriteOptions
 import logging
-from GivTCP.settings import GiV_Settings
+from logging.handlers import TimedRotatingFileHandler
+from settings import GiV_Settings
 
+logger = logging.getLogger("GivTCP_Influx_"+str(GiV_Settings.givtcp_instance))
+logging.basicConfig(format='%(asctime)s - %(name)s - [%(levelname)s] - %(message)s')
+formatter = logging.Formatter(
+    '%(asctime)s - %(name)s - [%(levelname)s] - %(message)s')
+if GiV_Settings.Debug_File_Location!="":
+    fh = TimedRotatingFileHandler(GiV_Settings.Debug_File_Location, when='D', interval=1, backupCount=7)
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
 if GiV_Settings.Log_Level.lower()=="debug":
-    if GiV_Settings.Debug_File_Location=="":
-        logging.basicConfig(level=logging.DEBUG)
-    else:
-        logging.basicConfig(filename=GiV_Settings.Debug_File_Location, encoding='utf-8', level=logging.DEBUG)
+    logger.setLevel(logging.DEBUG)
 elif GiV_Settings.Log_Level.lower()=="info":
-    if GiV_Settings.Debug_File_Location=="":
-        logging.basicConfig(level=logging.INFO)
-    else:
-        logging.basicConfig(filename=GiV_Settings.Debug_File_Location, encoding='utf-8', level=logging.INFO)
+    logger.setLevel(logging.INFO)
+elif GiV_Settings.Log_Level.lower()=="critical":
+    logger.setLevel(logging.CRITICAL)
+elif GiV_Settings.Log_Level.lower()=="warning":
+    logger.setLevel(logging.WARNING)
 else:
-    if GiV_Settings.Debug_File_Location=="":
-        logging.basicConfig(level=logging.ERROR)
-    else:
-        logging.basicConfig(filename=GiV_Settings.Debug_File_Location, encoding='utf-8', level=logging.ERROR)
+    logger.setLevel(logging.ERROR)
 
-logger = logging.getLogger("GivTCP")
 
 class GivInflux():
 

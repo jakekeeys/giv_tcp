@@ -1,3 +1,6 @@
 GivTCP/settings.py
+GivTCP/testdata.json
+GivTCP/startup.sh
 .lockfile
 *.pkl
+.forceFullRefresh
