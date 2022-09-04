@@ -32,4 +32,5 @@ class GiV_Settings:
     night_rate_start="00:00"
     export_rate=0.055
     givtcp_instance=1
-    cache_location="C:/Users/mark/Code-Dev/givtcp/givTCP_stable/giv_tcp"
+    cache_location="C:/Users/mark/Code-Dev/givtcp/dev/giv_tcp"
+    data_smoother="High"

@@ -8,10 +8,7 @@ logger = logging.getLogger("GivTCP_Startup")
 logging.basicConfig(format='%(asctime)s - %(name)s - [%(levelname)s] - %(message)s')
 formatter = logging.Formatter(
     '%(asctime)s - %(name)s - [%(levelname)s] - %(message)s')
-if os.getenv("DEBUG_FILE_LOCATION")=="":
-    fh = TimedRotatingFileHandler(os.getenv("DEBUG_FILE_LOCATION"), when='D', interval=1, backupCount=7)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
+
 if str(os.getenv("LOG_LEVEL")).lower()=="debug":
     logger.setLevel(logging.DEBUG)
 elif str(os.getenv("LOG_LEVEL")).lower()=="info":
@@ -68,8 +65,6 @@ for inv in range(1,int(os.getenv('NUMINVERTORS'))+1):
         outp.write("    MQTT_Port="+str(os.getenv("MQTT_PORT")+"\n"))
         outp.write("    Log_Level=\""+str(os.getenv("LOG_LEVEL")+"\"\n"))
         #setup debug filename for each inv
-        if str(os.getenv("DEBUG_FILE_LOCATION"))!="": FILENAME=str(os.getenv("DEBUG_FILE_LOCATION")).split('.')[0]+"_INV_"+str(inv)+"."+str(os.getenv("DEBUG_FILE_LOCATION")).split('.')[1]
-        outp.write("    Debug_File_Location=\""+str(FILENAME+"\"\n"))
         outp.write("    Influx_Output="+str(os.getenv("INFLUX_OUTPUT"))+"\n")
         outp.write("    influxURL=\""+str(os.getenv("INFLUX_URL")+"\"\n"))
         outp.write("    influxToken=\""+str(os.getenv("INFLUX_TOKEN")+"\"\n"))
@@ -86,20 +81,19 @@ for inv in range(1,int(os.getenv('NUMINVERTORS'))+1):
         outp.write("    day_rate_start=\""+str(os.getenv("DAYRATESTART")+"\"\n"))
         outp.write("    night_rate_start=\""+str(os.getenv("NIGHTRATESTART")+"\"\n"))
         outp.write("    ha_device_prefix=\""+str(os.getenv("HADEVICEPREFIX")+"\"\n"))
+        outp.write("    data_smoother=\""+str(os.getenv("DATASMOOTHER")+"\"\n"))
         if str(os.getenv("CACHELOCATION"))=="":
-            outp.write("    cache_location=\""+str(os.getenv("CACHELOCATION")+"\"\n"))
-        else:
             outp.write("    cache_location=\"/config/GivTCP\"\n")
+            outp.write("    Debug_File_Location=\"/config/GivTCP/log_inv_"+str(inv)+".log\"\n")
+        else:
+            outp.write("    cache_location=\""+str(os.getenv("CACHELOCATION")+"\"\n"))
+            outp.write("    Debug_File_Location=\""+os.getenv("CACHELOCATION")+"/log_inv_"+str(inv)+".log\"\n")
 
     # replicate the startup script here:
 
     if exists(os.getenv("CACHELOCATION")+"/regCache_"+str(inv)+".pkl"):
         logger.critical("Removing old invertor data cache")
         os.remove(str(os.getenv("CACHELOCATION"))+"/regCache_"+str(inv)+".pkl")
-        # rather than just delete, reset to empty list...
-        #regCacheStack=[0,0,0,0,0]
-        #with open(os.getenv("CACHELOCATION")+"/regCache_"+str(inv)+".pkl", 'wb') as outp:
-        #    pickle.dump(regCacheStack, outp, pickle.HIGHEST_PROTOCOL)
     if exists(PATH+"/.lockfile"):
         logger.critical("Removing old .lockfile")
         os.remove(PATH+"/.lockfile")

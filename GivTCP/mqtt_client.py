@@ -1,12 +1,14 @@
 import paho.mqtt.client as mqtt
-import time, sys, importlib,logging
+import time, sys, importlib,logging, json, time
 from os.path import exists
 from logging.handlers import TimedRotatingFileHandler
 import settings
 from settings import GiV_Settings
 import write as wr
 import pickle
+import threading as T
 from pickletools import read_uint1
+from givenergy_modbus.client import GivEnergyClient
 sys.path.append(GiV_Settings.default_path)
 
 logger = logging.getLogger("GivTCP_MQTT_Client_"+str(GiV_Settings.givtcp_instance))
@@ -151,6 +153,18 @@ def on_message(client, userdata, message):
             payload['finish']=message.payload.decode("utf-8")[:5]
             payload['start']=start[:5]
             result=wr.setDischargeSlot2(payload)
+    elif command=="tempPauseDischarge":
+        writecommand=float(message.payload.decode("utf-8"))
+        result=wr.tempPauseDischarge(writecommand)
+    elif command=="tempPauseCharge":
+        writecommand=float(message.payload.decode("utf-8"))
+        result=wr.tempPauseCharge(writecommand)
+    elif command=="forceCharge":
+        writecommand=float(message.payload.decode("utf-8"))
+        result=wr.forceCharge(writecommand)
+    elif command=="forceExport":
+        writecommand=float(message.payload.decode("utf-8"))
+        result=wr.forceExport(writecommand)
     #Do something with the result??
 
 def on_connect(client, userdata, flags, rc):

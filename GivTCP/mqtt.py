@@ -73,11 +73,11 @@ class GivMQTT():
                 output=GivMQTT.iterate_dict(payload,rootTopic+p_load)   #create LUT for MQTT publishing
                 for value in output:
                     client.publish(value,output[value])
-            client.loop_stop()                      			#Stop loop
-            client.disconnect()
         except:
             e = sys.exc_info()
             logger.error("Error connecting to MQTT Broker: " + str(e))
+        client.loop_stop()                      			#Stop loop
+        client.disconnect()
         return client
 
     def iterate_dict(array,topic):      #Create LUT of topics and datapoints
