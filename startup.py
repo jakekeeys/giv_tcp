@@ -24,6 +24,8 @@ selfRun={}
 mqttClient={}
 gunicorn={}
 webDash={}
+rqWorker={}
+redis={}
 
 # Check if config firectory exists and creates it if not
 
@@ -97,13 +99,27 @@ for inv in range(1,int(os.getenv('NUMINVERTORS'))+1):
     if exists(PATH+"/.lockfile"):
         logger.critical("Removing old .lockfile")
         os.remove(PATH+"/.lockfile")
+    if exists(PATH+"/.FCRunning"):
+        logger.critical("Removing old .FCRunning")
+        os.remove(PATH+"/.FCRunning")
+    if exists(PATH+"/.FERunning"):
+        logger.critical("Removing old .FERunning")
+        os.remove(PATH+"/.FERunning")
     if exists(os.getenv("CACHELOCATION")+"/battery_"+str(inv)+".pkl"):
         logger.critical("Removing old battery data cache")
         os.remove(str(os.getenv("CACHELOCATION"))+"/battery_"+str(inv)+".pkl")
     # delete battery and rate_data if too old (12 hours?)
     #if (datetime.time() - os.path.getmtime(batterypkl)): 
 
+########### Run the various processes needed #############
     os.chdir(PATH)
+
+    redis[inv]=subprocess.Popen(["/usr/bin/redis-server","/app/redis.conf"])
+    logger.critical("Running Redis")
+
+    rqWorker[inv]=subprocess.Popen(["/usr/local/bin/python3",PATH+"/worker.py"])
+    logger.critical("Running RQ worker to queue and process givernergy-modbus calls")
+
     if os.getenv('SELF_RUN')=="True":
         logger.critical ("Running Invertor read loop every "+str(os.getenv('SELF_RUN_LOOP_TIMER')))
         selfRun[inv]=subprocess.Popen(["/usr/local/bin/python3",PATH+"/read.py", "self_run2"])

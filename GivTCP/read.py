@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # version 2022.08.01
+from ntpath import join
 import sys
 from pickletools import read_uint1
 import json
@@ -8,13 +9,13 @@ from logging.handlers import TimedRotatingFileHandler
 import datetime
 import pickle
 import time
-from GivLUT import GivLUT
+from GivLUT import GivLUT, GivQueue, GivClient
 from settings import GiV_Settings
 from os.path import exists
 import os
 
 logging.getLogger("givenergy_modbus").setLevel(logging.CRITICAL)
-from givenergy_modbus.client import GivEnergyClient
+logging.getLogger("rq.worker").setLevel(logging.CRITICAL)
 from givenergy_modbus.model.inverter import Model
 from givenergy_modbus.model.battery import Battery
 from givenergy_modbus.model.plant import Plant
@@ -44,14 +45,6 @@ else:
 
 
 
-lockfile=".lockfile"
-regcache=GiV_Settings.cache_location+"/regCache_"+str(GiV_Settings.givtcp_instance)+".pkl"
-ratedata=GiV_Settings.cache_location+"/rateData_"+str(GiV_Settings.givtcp_instance)+".pkl"
-lastupdate=GiV_Settings.cache_location+"/lastUpdate_"+str(GiV_Settings.givtcp_instance)+".pkl"
-forcefullrefresh=GiV_Settings.cache_location+"/.forceFullRefresh_"+str(GiV_Settings.givtcp_instance)
-batterypkl=GiV_Settings.cache_location+"/battery_"+str(GiV_Settings.givtcp_instance)+".pkl"
-ppkwhtouch=".ppkwhtouch"
-
 def getData(fullrefresh):      #Read from Invertor put in cache 
     plant=Plant(number_batteries=int(GiV_Settings.numBatteries))
     energy_total_output={}
@@ -60,7 +53,6 @@ def getData(fullrefresh):      #Read from Invertor put in cache
     controlmode={}
     power_flow_output={}
     invertor={}
-    batteries = {}
     multi_output={}
     result={}
     temp={}
@@ -68,36 +60,37 @@ def getData(fullrefresh):      #Read from Invertor put in cache
     logging.info("Getting All Registers")
 
     ### Only run if no lockfile present
-    if exists(lockfile):
+    if exists(GivLUT.lockfile):
         logger.error("Lockfile set so aborting getData")
         result['result']="Error: Lockfile set so aborting getData"
         return json.dumps(result)
 
     #Connect to Invertor and load data
+########### Use a queue for the giv read and join for the output #############
     try:
         # SET Lockfile to prevent clashes
         logger.info(" setting lock file")
         logger.info("Connecting to: "+ GiV_Settings.invertorIP)
-        open(lockfile, 'w').close()
-        client=GivEnergyClient(host=GiV_Settings.invertorIP)
-        client.refresh_plant(plant,full_refresh=fullrefresh)
+        open(GivLUT.lockfile, 'w').close()
+#        client=GivEnergyClient(host=GiV_Settings.invertorIP)
+        GivClient.client.refresh_plant(plant,full_refresh=fullrefresh)
         GEInv=plant.inverter
         GEBat=plant.batteries
         #Close Lockfile to allow access
         logger.info("Removing lock file")
-        os.remove(lockfile)
+        os.remove(GivLUT.lockfile)
   
         multi_output['Last_Updated_Time']= datetime.datetime.utcnow().replace(tzinfo=datetime.timezone.utc).isoformat()  
         
         #Get lastupdate from pickle if it exists
-        if exists(lastupdate):
-            with open(lastupdate, 'rb') as inp:
+        if exists(GivLUT.lastupdate):
+            with open(GivLUT.lastupdate, 'rb') as inp:
                 previousUpdate= pickle.load(inp)
             timediff=datetime.datetime.fromisoformat(multi_output['Last_Updated_Time'])-datetime.datetime.fromisoformat(previousUpdate)
             multi_output['Time_Since_Last_Update']=(((timediff.seconds*1000000)+timediff.microseconds)/1000000)
         
         #Save new time to pickle
-        with open(lastupdate, 'wb') as outp:
+        with open(GivLUT.lastupdate, 'wb') as outp:
             pickle.dump(multi_output['Last_Updated_Time'], outp, pickle.HIGHEST_PROTOCOL)
 
         multi_output['status']="online"
@@ -109,7 +102,7 @@ def getData(fullrefresh):      #Read from Invertor put in cache
         temp['result']="Error collecting registers: " + str(e)
         #Close Lockfile to allow access in the event of an error
         logger.info("Removing lock file due to read error")
-        os.remove(lockfile)
+        os.remove(GivLUT.lockfile)
         return json.dumps(temp)
 
     try:
@@ -146,10 +139,10 @@ def getData(fullrefresh):      #Read from Invertor put in cache
         checksum=0
         for item in energy_today_output:
             checksum=checksum+energy_today_output[item]
-        if checksum==0 and GEInv.system_time.hour==0 and GEInv.system_time.minute==0 and exists(regcache):
+        if checksum==0 and GEInv.system_time.hour==0 and GEInv.system_time.minute==0 and exists(GivLUT.regcache):
             #remove regcache at midnight
             logger.info("Energy Today is Zero and its midnight so resetting regCache")
-            os.remove(regcache)
+            os.remove(GivLUT.regcache)
 
         
 ############  Core Power Stats    ############
@@ -232,8 +225,8 @@ def getData(fullrefresh):      #Read from Invertor put in cache
 ######## Grab output history to allow data smoothing ########
 
         #Grab previous data from Pickle and use it validate any outrageous changes
-        if exists(regcache):      # if there is a cache then grab it
-            with open(regcache, 'rb') as inp:
+        if exists(GivLUT.regcache):      # if there is a cache then grab it
+            with open(GivLUT.regcache, 'rb') as inp:
                 regCacheStack= pickle.load(inp)
                 multi_output_old=regCacheStack[4]
         else:
@@ -384,22 +377,22 @@ def getData(fullrefresh):      #Read from Invertor put in cache
             controlmode['Temp_Pause_Discharge']="Normal"
 
         if exists(".FCRunning"):
-            logger.critical("Force Charge is Running")
+            logger.info("Force Charge is Running")
             controlmode['Force_Charge']="Running"
         else:
             controlmode['Force_Charge']="Normal"
         if exists(".FERunning"):
-            logger.critical("Force_Export is Running")
+            logger.info("Force_Export is Running")
             controlmode['Force_Export']="Running"
         else:
             controlmode['Force_Export']="Normal"
         if exists(".tpcRunning"):
-            logger.critical("Temp Pause Charge is Running")
+            logger.info("Temp Pause Charge is Running")
             controlmode['Temp_Pause_Charge']="Running"
         else:
             controlmode['Temp_Pause_Charge']="Normal"
         if exists(".tpdRunning"):
-            logger.critical("Temp_Pause_Discharge is Running")
+            logger.info("Temp_Pause_Discharge is Running")
             controlmode['Temp_Pause_Discharge']="Running"
         else:
             controlmode['Temp_Pause_Discharge']="Normal"
@@ -513,7 +506,7 @@ def getData(fullrefresh):      #Read from Invertor put in cache
         regCacheStack.append(multi_output)
 
         # Save new data to Pickle
-        with open(regcache, 'wb') as outp:
+        with open(GivLUT.regcache, 'wb') as outp:
             pickle.dump(regCacheStack, outp, pickle.HIGHEST_PROTOCOL)
         result['result']="Success retrieving data"
     except:
@@ -526,7 +519,10 @@ def getData(fullrefresh):      #Read from Invertor put in cache
 
 def runAll(full_refresh):       #Read from Invertor put in cache and publish
     #full_refresh=True
-    result=getData(full_refresh)
+    from read import getData
+    result=GivQueue.q.enqueue(getData,full_refresh)
+    while result.result is None:
+        time.sleep(0.5)
     # Step here to validate data against previous pickle?
     multi_output=pubFromPickle()
     return multi_output
@@ -540,10 +536,10 @@ def pubFromJSON():
 def pubFromPickle():        #Publish last cached Invertor Data
     multi_output={}
     result="Success"
-    if not exists(regcache):      #if there is no cache, create it
+    if not exists(GivLUT.regcache):      #if there is no cache, create it
         result=getData(True)
     if "Success" in result:
-        with open(regcache, 'rb') as inp:
+        with open(GivLUT.regcache, 'rb') as inp:
             regCacheStack= pickle.load(inp)
             multi_output=regCacheStack[4]
         SN=multi_output["Invertor_Details"]['Invertor_Serial_Number']
@@ -557,9 +553,9 @@ def self_run2():
     runAll("True")
     while True:
         counter=counter+1
-        if exists(forcefullrefresh):
+        if exists(GivLUT.forcefullrefresh):
             runAll("True")
-            os.remove(forcefullrefresh)
+            os.remove(GivLUT.forcefullrefresh)
             counter=0
         elif counter==20:
             counter=0
@@ -647,8 +643,8 @@ def iterate_dict(array):        # Create a publish safe version of the output (c
 def ratecalcs(multi_output, multi_output_old):
     rate_data={}
     #check if pickle data exists:
-    if exists(ratedata):
-        with open(ratedata, 'rb') as inp:
+    if exists(GivLUT.ratedata):
+        with open(GivLUT.ratedata, 'rb') as inp:
             rate_data= pickle.load(inp)
     
     import_energy=multi_output['Energy']['Total']['Import_Energy_Total_kWh']
@@ -725,7 +721,7 @@ def ratecalcs(multi_output, multi_output_old):
     multi_output['Energy']['Rates']=rate_data
 
     # dump current data to Pickle
-    with open(ratedata, 'wb') as outp:
+    with open(GivLUT.ratedata, 'wb') as outp:
         pickle.dump(rate_data, outp, pickle.HIGHEST_PROTOCOL)
 
     return (multi_output)
@@ -826,8 +822,8 @@ def dataSmoother(dataNew, regCacheStack,name,section,batSN):
 def calcBatteryValue(multi_output):
     #get current data from read pickle
     batterystats={}
-    if exists(batterypkl):
-        with open(batterypkl, 'rb') as inp:
+    if exists(GivLUT.batterypkl):
+        with open(GivLUT.batterypkl, 'rb') as inp:
             batterystats= pickle.load(inp)
     else:       # if no old AC charge, then set it to now and zero out value and ppkwh
         logger.critical("First time running so saving AC Charge status")
@@ -837,7 +833,7 @@ def calcBatteryValue(multi_output):
         batterystats['Battery_kWh_old']=multi_output['Power']['Power']['SOC_kWh']
 
     if GiV_Settings.first_run or datetime.datetime.now().minute==59 or datetime.datetime.now().minute==29:
-        if not exists(ppkwhtouch) and exists(batterypkl):      # only run this if there is no touchfile but there is a battery stat
+        if not exists(GivLUT.ppkwhtouch) and exists(GivLUT.batterypkl):      # only run this if there is no touchfile but there is a battery stat
             battery_kwh=multi_output['Power']['Power']['SOC_kWh']
             ac_charge=float(multi_output['Energy']['Total']['AC_Charge_Energy_Total_kWh'])-float(batterystats['AC Charge last'])
             logger.info("Battery_kWh has gone from: "+str(batterystats['Battery_kWh_old'])+" -> "+str(battery_kwh))
@@ -858,13 +854,13 @@ def calcBatteryValue(multi_output):
             batterystats['AC Charge last']=float(multi_output['Energy']['Total']['AC_Charge_Energy_Total_kWh'])
             logger.info("Updating battery_kWh_old to: "+str(battery_kwh))
             batterystats['Battery_kWh_old']=battery_kwh
-            open(ppkwhtouch, 'w').close()       # set touch file  to stop repeated triggers in the single minute
+            open(GivLUT.ppkwhtouch, 'w').close()       # set touch file  to stop repeated triggers in the single minute
 
     else:       # remove the touchfile if it exists 
-        if exists(ppkwhtouch): os.remove(ppkwhtouch)
+        if exists(GivLUT.ppkwhtouch): os.remove(GivLUT.ppkwhtouch)
 
     #write data to pickle
-    with open(batterypkl, 'wb') as outp:
+    with open(GivLUT.batterypkl, 'wb') as outp:
         pickle.dump(batterystats, outp, pickle.HIGHEST_PROTOCOL)
 
     #remove non publishable stats

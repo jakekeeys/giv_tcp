@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
  
-## [2.0.0] - 2022-09-04
+## [2.0.0b] - 2022-09-04
  
 Major update including various stability fixes and new features
  

@@ -11,6 +11,7 @@ RUN apk add git
 RUN apk add tzdata
 RUN apk add musl-utils
 RUN apk add xsel
+RUN apk add redis
 
 # set the working directory in the container
 WORKDIR /app
@@ -28,6 +29,7 @@ COPY GivTCP/ ./GivTCP
 COPY GivEnergy-Smart-Home-Display-givtcp/ ./GivEnergy-Smart-Home-Display-givtcp
 
 COPY startup.py startup.py
+COPY redis.conf redis.conf
 
 ENV NUMINVERTORS=1
 ENV INVERTOR_IP_1=""
@@ -68,6 +70,6 @@ ENV SOLCASTAPI=""
 ENV SOLCASTSITEID=""
 
 
-EXPOSE 6345 1883 3000
+EXPOSE 6345 1883 3000 6379
 
 CMD ["python3", "/app/startup.py"]

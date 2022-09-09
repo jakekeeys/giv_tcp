@@ -6,7 +6,7 @@ class GiV_Settings:
     ha_device_prefix=""             #Required - This is the prefix used at the start of every Home Assistant device created
 #Debug Settings
     Log_Level="Error"               #Optional - Enables logging level. Default is "Error", but can be "Info" or "Debug"
-    Debug_File_Location=""          #Optional - Location of logs (Default is console)
+    Debug_File_Location="C:/Users/mark/Code-Dev/givtcp/dev/giv_tcp/log_inv_1.log"          #Optional - Location of logs (Default is console)
     Print_Raw_Registers=True        #Optional - Bool - True publishes all available registers.
 #MQTT Output Settings
     MQTT_Output= True               #Optional - Bool - True or False

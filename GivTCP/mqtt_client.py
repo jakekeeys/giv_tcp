@@ -6,9 +6,9 @@ import settings
 from settings import GiV_Settings
 import write as wr
 import pickle
-import threading as T
+from GivLUT import GivQueue, GivLUT, GivClient
 from pickletools import read_uint1
-from givenergy_modbus.client import GivEnergyClient
+
 sys.path.append(GiV_Settings.default_path)
 
 logger = logging.getLogger("GivTCP_MQTT_Client_"+str(GiV_Settings.givtcp_instance))
@@ -29,8 +29,6 @@ elif GiV_Settings.Log_Level.lower()=="warning":
     logger.setLevel(logging.WARNING)
 else:
     logger.setLevel(logging.ERROR)
-
-regcache=GiV_Settings.cache_location+"/regCache_"+str(GiV_Settings.givtcp_instance)+".pkl"
 
 if GiV_Settings.MQTT_Port=='':
     MQTT_Port=1883
@@ -68,103 +66,105 @@ def on_message(client, userdata, message):
     command=str(message.topic).split("/")[-1]
     if command=="setDischargeRate":
         writecommand['dischargeRate']=str(message.payload.decode("utf-8"))
-        result=wr.setDischargeRate(writecommand)
+        result=GivQueue.q.enqueue(wr.setDischargeRate,writecommand)
     elif command=="setChargeRate":
         writecommand['chargeRate']=str(message.payload.decode("utf-8"))
-        result=wr.setChargeRate(writecommand)
+        result=GivQueue.q.enqueue(wr.setChargeRate,writecommand)
     elif command=="enableChargeTarget":
         writecommand['state']=str(message.payload.decode("utf-8"))
-        result=wr.enableChargeTarget(writecommand)
+        result=GivQueue.q.enqueue(wr.enableChargeTarget,writecommand)
     elif command=="enableChargeSchedule":
         writecommand['state']=str(message.payload.decode("utf-8"))
-        result=wr.enableChargeSchedule(writecommand)
+        result=GivQueue.q.enqueue(wr.enableChargeSchedule,writecommand)
     elif command=="enableDishargeSchedule":
         writecommand['state']=str(message.payload.decode("utf-8"))
-        result=wr.enableDischargeSchedule(writecommand)
+        result=GivQueue.q.enqueue(wr.enableDischargeSchedule,writecommand)
     elif command=="enableDischarge":
         writecommand['state']=str(message.payload.decode("utf-8"))
-        result=wr.enableDischarge(writecommand)
+        result=GivQueue.q.enqueue(wr.enableDischarge,writecommand)
     elif command=="setChargeTarget":
         writecommand['chargeToPercent']=str(message.payload.decode("utf-8"))
-        result=wr.setChargeTarget(writecommand)
+        result=GivQueue.q.enqueue(wr.setChargeTarget,writecommand)
     elif command=="setBatteryReserve":
         writecommand['dischargeToPercent']=str(message.payload.decode("utf-8"))
-        result=wr.setBatteryReserve(writecommand)
+        result=GivQueue.q.enqueue(wr.setBatteryReserve,writecommand)
     elif command=="setBatteryMode":
         writecommand['mode']=str(message.payload.decode("utf-8"))
-        result=wr.setBatteryMode(writecommand)
+        result=GivQueue.q.enqueue(wr.setBatteryMode,writecommand)
     elif command=="setDateTime":
         writecommand['dateTime']=str(message.payload.decode("utf-8"))
-        result=wr.setDateTime(writecommand)
+        result=GivQueue.q.enqueue(wr.setDateTime,writecommand)
     elif command=="setShallowCharge":
         writecommand['val']=str(message.payload.decode("utf-8"))
-        result=wr.setShallowCharge(writecommand)
+        result=GivQueue.q.enqueue(wr.setShallowCharge,writecommand)
     elif command=="setChargeStart1":
-        if exists(regcache):
-            with open(regcache, 'rb') as inp:
+        if exists(GivLUT.regcache):
+            with open(GivLUT.regcache, 'rb') as inp:
                 regCacheStack= pickle.load(inp)
-            multi_output=regCacheStack[0]
+            multi_output=regCacheStack[4]
             finish=multi_output['Timeslots']['Charge_end_time_slot_1']
             payload['start']=message.payload.decode("utf-8")[:5]
             payload['finish']=finish[:5]
-            result=wr.setChargeSlot1(payload)
+            result=GivQueue.q.enqueue(wr.setChargeSlot1,payload)
     elif command=="setChargeEnd1":
-        if exists(regcache):
-            with open(regcache, 'rb') as inp:
+        if exists(GivLUT.regcache):
+            with open(GivLUT.regcache, 'rb') as inp:
                 regCacheStack= pickle.load(inp)
-            multi_output=regCacheStack[0]
+            multi_output=regCacheStack[4]
             start=multi_output['Timeslots']['Charge_start_time_slot_1']
             payload['finish']=message.payload.decode("utf-8")[:5]
             payload['start']=start[:5]
-            result=wr.setChargeSlot1(payload)
+            result=GivQueue.q.enqueue(wr.setChargeSlot1,payload)
     elif command=="setDischargeStart1":
-        if exists(regcache):
-            with open(regcache, 'rb') as inp:
+        if exists(GivLUT.regcache):
+            with open(GivLUT.regcache, 'rb') as inp:
                 regCacheStack= pickle.load(inp)
-            multi_output=regCacheStack[0]
+            multi_output=regCacheStack[4]
             finish=multi_output['Timeslots']['Discharge_end_time_slot_1']
             payload['start']=message.payload.decode("utf-8")[:5]
             payload['finish']=finish[:5]
-            result=wr.setDischargeSlot1(payload)
+            result=GivQueue.q.enqueue(wr.setDischargeSlot1,payload)
     elif command=="setDischargeEnd1":
-        if exists(regcache):
-            with open(regcache, 'rb') as inp:
+        if exists(GivLUT.regcache):
+            with open(GivLUT.regcache, 'rb') as inp:
                 regCacheStack= pickle.load(inp)
-            multi_output=regCacheStack[0]
+            multi_output=regCacheStack[4]
             start=multi_output['Timeslots']['Discharge_start_time_slot_1']
             payload['finish']=message.payload.decode("utf-8")[:5]
             payload['start']=start[:5]
-            result=wr.setDischargeSlot1(payload)
+            result=GivQueue.q.enqueue(wr.setDischargeSlot1,payload)
     elif command=="setDischargeStart2":
-        if exists(regcache):
-            with open(regcache, 'rb') as inp:
+        if exists(GivLUT.regcache):
+            with open(GivLUT.regcache, 'rb') as inp:
                 regCacheStack= pickle.load(inp)
-            multi_output=regCacheStack[0]
+            multi_output=regCacheStack[4]
             finish=multi_output['Timeslots']['Discharge_end_time_slot_2']
             payload['start']=message.payload.decode("utf-8")[:5]
             payload['finish']=finish[:5]
-            result=wr.setDischargeSlot2(payload)
+            result=GivQueue.q.enqueue(wr.setDischargeSlot2,payload)
     elif command=="setDischargeEnd2":
-        if exists(regcache):
-            with open(regcache, 'rb') as inp:
+        if exists(GivLUT.regcache):
+            with open(GivLUT.regcache, 'rb') as inp:
                 regCacheStack= pickle.load(inp)
-            multi_output=regCacheStack[0]
+            multi_output=regCacheStack[4]
             start=multi_output['Timeslots']['Discharge_start_time_slot_2']
             payload['finish']=message.payload.decode("utf-8")[:5]
             payload['start']=start[:5]
-            result=wr.setDischargeSlot2(payload)
+            result=GivQueue.q.enqueue(wr.setDischargeSlot2,payload)
+#            result=wr.setDischargeSlot2(payload)
     elif command=="tempPauseDischarge":
         writecommand=float(message.payload.decode("utf-8"))
-        result=wr.tempPauseDischarge(writecommand)
+        result=GivQueue.q.enqueue(wr.tempPauseDischarge,writecommand)
     elif command=="tempPauseCharge":
         writecommand=float(message.payload.decode("utf-8"))
-        result=wr.tempPauseCharge(writecommand)
+        result=GivQueue.q.enqueue(wr.tempPauseCharge,writecommand)
     elif command=="forceCharge":
         writecommand=float(message.payload.decode("utf-8"))
-        result=wr.forceCharge(writecommand)
+        result=GivQueue.q.enqueue(wr.forceCharge,writecommand)
     elif command=="forceExport":
         writecommand=float(message.payload.decode("utf-8"))
-        result=wr.forceExport(writecommand)
+        result=GivQueue.q.enqueue(wr.forceExport,writecommand)
+#        result=wr.forceExport(writecommand)
     #Do something with the result??
 
 def on_connect(client, userdata, flags, rc):

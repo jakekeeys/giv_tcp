@@ -8,3 +8,5 @@ requests
 flask
 pickle-mixin
 flask-cors
+rq
+redis

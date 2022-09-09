@@ -1,3 +1,14 @@
+class GivClient:
+    from givenergy_modbus.client import GivEnergyClient
+    from settings import GiV_Settings
+    client= GivEnergyClient(host=GiV_Settings.invertorIP)
+
+class GivQueue:
+    from redis import Redis
+    from rq import Connection, Queue
+    redis_connection = Redis(host='192.168.2.10', port=6379, db=0)
+    q = Queue(connection=redis_connection)
+
 class GEType:
     def __init__(self,dT,sC,cF,mn,mx,aZ,sM,oI):
         self.devType = dT
@@ -10,7 +21,18 @@ class GEType:
         self.onlyIncrease=oI
 
 class GivLUT:
-    # Format for entity_type: Name: [device type,sensor type,control function,min,max,allow zero,smooth,cantDecrease]
+    # File paths for use
+    from settings import GiV_Settings
+    lockfile=".lockfile"
+    regcache=GiV_Settings.cache_location+"/regCache_"+str(GiV_Settings.givtcp_instance)+".pkl"
+    ratedata=GiV_Settings.cache_location+"/rateData_"+str(GiV_Settings.givtcp_instance)+".pkl"
+    lastupdate=GiV_Settings.cache_location+"/lastUpdate_"+str(GiV_Settings.givtcp_instance)+".pkl"
+    forcefullrefresh=GiV_Settings.cache_location+"/.forceFullRefresh_"+str(GiV_Settings.givtcp_instance)
+    batterypkl=GiV_Settings.cache_location+"/battery_"+str(GiV_Settings.givtcp_instance)+".pkl"
+    ppkwhtouch=".ppkwhtouch"
+    schedule=".schedule"
+
+    # Standard values for devices
     maxInvPower=6000
     maxPower=20000
     maxBatPower=3000
@@ -172,7 +194,7 @@ class GivLUT:
 "23:00:00","23:01:00","23:02:00","23:03:00","23:04:00","23:05:00","23:06:00","23:07:00","23:08:00","23:09:00","23:10:00","23:11:00","23:12:00","23:13:00","23:14:00","23:15:00","23:16:00","23:17:00","23:18:00","23:19:00","23:20:00","23:21:00","23:22:00","23:23:00","23:24:00","23:25:00","23:26:00","23:27:00","23:28:00","23:29:00","23:30:00","23:31:00","23:32:00","23:33:00","23:34:00","23:35:00","23:36:00","23:37:00","23:38:00","23:39:00","23:40:00","23:41:00","23:42:00","23:43:00","23:44:00","23:45:00","23:46:00","23:47:00","23:48:00","23:49:00","23:50:00","23:51:00","23:52:00","23:53:00","23:54:00","23:55:00","23:56:00","23:57:00","23:58:00","23:59:00"
     ]
     
-    delay_times=["Normal","Running","15","30","45","60","90","120","150","180"]
+    delay_times=["Normal","Running","2","15","30","45","60","90","120","150","180"]
     modes=["Eco","Timed Demand","Timed Export","Unknown", "Eco (Paused)"]
 
     def getTime(timestamp):
