@@ -8,6 +8,7 @@ services:
       - "3000:3000"                   # This should match the WEB_DASH_PORT ENV below
       - "6379:6379"                   # Redis for job queueing
     environment:
+## Critical to update
       - NUMINVERTORS=1                # Set this to the number of Invertors in your setup, then replicate the next two lines for each invertor (changing the last number of the ENV)
       - INVERTOR_IP_1=                # Set this to the IP address of your Invertor on you rlocal network
       - NUMBATTERIES_1=1              # Number of battery modules installed and connected to the above invertor
@@ -15,6 +16,10 @@ services:
       - MQTT_ADDRESS=                 # IP address of an existing MQTT broker, or leave as "127.0.0.1" to use the internal broker
       - MQTT_USERNAME=                # Username of your existing broker, if needed. Not required for internal broker
       - MQTT_PASSWORD=                # Password of your existing broker, if needed. Not required for internal broker
+      - HOSTIP=                       # External IP address of the docker host (needed for web dashboard)
+      - CACHELOCATION=/config/GivTCP  # Location of cache data, this folder can be mapped to a persistence storage outside the container
+      - TZ=Europe/London              # Set to your Timezone
+## Optional
       - MQTT_TOPIC=                   # Root topic to publish data to. If left blank it will default to GivEnergy/<invertor_serial_number>
       - MQTT_PORT=1883                # Port of your existing broker, leave as "1883" for internal broker
       - LOG_LEVEL=Error               # Level of logs to be reported: "Error", "Info" or "Debug"
@@ -32,13 +37,10 @@ services:
       - DAYRATE=0.155                 # Price in £/$ for your daytime electricity per kWh
       - NIGHTRATE=0.055               # Price in £/$ for your night time electricity per kWh
       - EXPORTRATE=0.04               # Price in £/$ for your export electricity per kWh
-      - HOSTIP=                       # External IP address of the docker host (needed for web dashboard)
       - DAYRATESTART=04:30            # Time in HH:MM when your day time tariff kicks in
       - NIGHTRATESTART=00:30          # Time in HH:MM when your night time tariff kicks in
-      - TZ=Europe/London              # Set to your Timezone
       - WEB_DASH=False                # Enable the wed dashboard
       - WEB_DASH_PORT=3000            # Port to serve the web dashboard on
-      - CACHELOCATION=/config/GivTCP  # Location of cache data, this folder can be mapped to a persistence storage outside the container
       - SMARTTARGET=False             # Enables the PALM capability, requires the three ENV below to be set
       - GEAPI=                        # API Key for the GivEnergy Cloud
       - SOLCASTAPI=                   # API key for Solcast
