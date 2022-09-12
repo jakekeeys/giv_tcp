@@ -1,31 +1,12 @@
 # version 2022.01.21
-import logging, sys, time, json
-from logging.handlers import TimedRotatingFileHandler
-import paho.mqtt.client as mqtt
-import logging  
+import sys, time, json
+import paho.mqtt.client as mqtt 
 from settings import GiV_Settings
 from givenergy_modbus.model.inverter import Model
 from mqtt import GivMQTT
 from GivLUT import GivLUT
 
-logger = logging.getLogger("GivTCP_HA_AUTO_D_"+str(GiV_Settings.givtcp_instance))
-logging.basicConfig(format='%(asctime)s - %(name)s - [%(levelname)s] - %(message)s')
-formatter = logging.Formatter(
-    '%(asctime)s - %(name)s - [%(levelname)s] - %(message)s')
-if GiV_Settings.Debug_File_Location!="":
-    fh = TimedRotatingFileHandler(GiV_Settings.Debug_File_Location, when='D', interval=1, backupCount=7)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-if GiV_Settings.Log_Level.lower()=="debug":
-    logger.setLevel(logging.DEBUG)
-elif GiV_Settings.Log_Level.lower()=="info":
-    logger.setLevel(logging.INFO)
-elif GiV_Settings.Log_Level.lower()=="critical":
-    logger.setLevel(logging.CRITICAL)
-elif GiV_Settings.Log_Level.lower()=="warning":
-    logger.setLevel(logging.WARNING)
-else:
-    logger.setLevel(logging.ERROR)
+logger=GivLUT.logger
 
 class HAMQTT():
     if GiV_Settings.MQTT_Port=='':

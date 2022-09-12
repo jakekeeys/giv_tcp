@@ -2,23 +2,6 @@ from datetime import datetime, timedelta
 from genericpath import exists
 import os, pickle, subprocess, logging,shutil, shlex, schedule
 from time import sleep
-from logging.handlers import TimedRotatingFileHandler
-
-logger = logging.getLogger("GivTCP_Startup")
-logging.basicConfig(format='%(asctime)s - %(name)s - [%(levelname)s] - %(message)s')
-formatter = logging.Formatter(
-    '%(asctime)s - %(name)s - [%(levelname)s] - %(message)s')
-
-if str(os.getenv("LOG_LEVEL")).lower()=="debug":
-    logger.setLevel(logging.DEBUG)
-elif str(os.getenv("LOG_LEVEL")).lower()=="info":
-    logger.setLevel(logging.INFO)
-elif str(os.getenv("LOG_LEVEL")).lower()=="critical":
-    logger.setLevel(logging.CRITICAL)
-elif str(os.getenv("LOG_LEVEL")).lower()=="warning":
-    logger.setLevel(logging.WARNING)
-else:
-    logger.setLevel(logging.ERROR)
 
 selfRun={}
 mqttClient={}
@@ -26,6 +9,20 @@ gunicorn={}
 webDash={}
 rqWorker={}
 redis={}
+
+logger = logging.getLogger("startup")
+logging.basicConfig(format='%(asctime)s - %(name)s - [%(levelname)s] - %(message)s')
+
+if os.getenv("LOG_LEVEL").lower=="debug":
+    logger.setLevel(logging.DEBUG)
+elif os.getenv("LOG_LEVEL").lower()=="info":
+    logger.setLevel(logging.INFO)
+elif os.getenv("LOG_LEVEL").lower()=="critical":
+    logger.setLevel(logging.CRITICAL)
+elif os.getenv("LOG_LEVEL").lower()=="warning":
+    logger.setLevel(logging.WARNING)
+else:
+    logger.setLevel(logging.ERROR)
 
 # Check if config firectory exists and creates it if not
 
@@ -38,6 +35,14 @@ if not os.path.exists(str(os.getenv("CACHELOCATION"))):
     logger.critical("No config directory exists, so creating it...")
 else:
     logger.critical("Config directory already exists")
+
+redis=subprocess.Popen(["/usr/bin/redis-server","/app/redis.conf"])
+logger.critical("Running Redis")
+
+if str(os.getenv("MQTT_OUTPUT"))=="True" and str(os.getenv("MQTT_ADDRESS"))=="127.0.0.1":
+    # Run internal MQTT Broker
+    mqtt=subprocess.Popen(["/usr/sbin/mosquitto","/app/GivTCP/mqtt.conf"])
+    logger.critical("Running Mosquitto")
 
 for inv in range(1,int(os.getenv('NUMINVERTORS'))+1):
     logger.critical ("Setting up invertor: "+str(inv)+" of "+str(os.getenv('NUMINVERTORS')))
@@ -114,14 +119,11 @@ for inv in range(1,int(os.getenv('NUMINVERTORS'))+1):
 ########### Run the various processes needed #############
     os.chdir(PATH)
 
-    redis[inv]=subprocess.Popen(["/usr/bin/redis-server","/app/redis.conf"])
-    logger.critical("Running Redis")
-
     rqWorker[inv]=subprocess.Popen(["/usr/local/bin/python3",PATH+"/worker.py"])
     logger.critical("Running RQ worker to queue and process givernergy-modbus calls")
 
     if os.getenv('SELF_RUN')=="True":
-        logger.critical ("Running Invertor read loop every "+str(os.getenv('SELF_RUN_LOOP_TIMER')))
+        logger.critical ("Running Invertor read loop every "+str(os.getenv('SELF_RUN_LOOP_TIMER'))+"s")
         selfRun[inv]=subprocess.Popen(["/usr/local/bin/python3",PATH+"/read.py", "self_run2"])
     if os.getenv('MQTT_OUTPUT')=="True":
         logger.critical ("Subscribing Mosquitto on port "+str(os.getenv('MQTT_PORT')))
@@ -163,7 +165,7 @@ while True:
         if os.getenv('SELF_RUN')==True and not selfRun[inv].poll()==None:
             logger.error("Self Run loop process died. restarting...")
             os.chdir(PATH)
-            logger.critical ("Running Invertor read loop every "+str(os.getenv('SELF_RUN_LOOP_TIMER')))
+            logger.critical ("Running Invertor read loop every "+str(os.getenv('SELF_RUN_LOOP_TIMER'))+"s")
             selfRun[inv]=subprocess.Popen(["/usr/local/bin/python3",PATH+"/read.py", "self_run2"])
         elif os.getenv('MQTT_OUTPUT')==True and not mqttClient[inv].poll()==None:
             logger.error("MQTT Client process died. Restarting...")

@@ -3,47 +3,30 @@
 import sys
 import json
 import logging
-from logging.handlers import TimedRotatingFileHandler
 import datetime
 from datetime import datetime, timedelta
 from settings import GiV_Settings
 import time
 from os.path import exists
 import pickle,os
-from GivLUT import GivLUT, GivQueue, GivClient
+from GivLUT import GivLUT, GivQueue
+from givenergy_modbus.client import GivEnergyClient
 
 #client= GivEnergyClient(host=GiV_Settings.invertorIP)
 
 logging.getLogger("givenergy_modbus").setLevel(logging.CRITICAL)
+client=GivEnergyClient(host=GiV_Settings.invertorIP)
 
-
-logger = logging.getLogger("GivTCP_Write_"+str(GiV_Settings.givtcp_instance))
-logging.basicConfig(format='%(asctime)s - %(name)s - [%(levelname)s] - %(message)s')
-formatter = logging.Formatter(
-    '%(asctime)s - %(name)s - [%(levelname)s] - %(message)s')
-if GiV_Settings.Debug_File_Location!="":
-    fh = TimedRotatingFileHandler(GiV_Settings.Debug_File_Location, when='D', interval=1, backupCount=7)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-if GiV_Settings.Log_Level.lower()=="debug":
-    logger.setLevel(logging.DEBUG)
-elif GiV_Settings.Log_Level.lower()=="info":
-    logger.setLevel(logging.INFO)
-elif GiV_Settings.Log_Level.lower()=="critical":
-    logger.setLevel(logging.CRITICAL)
-elif GiV_Settings.Log_Level.lower()=="warning":
-    logger.setLevel(logging.WARNING)
-else:
-    logger.setLevel(logging.ERROR)
+logger = GivLUT.logger
 
 
 def enableChargeTarget(payload):
     temp={}
     try:
         if payload['state']=="enable":
-            GivClient.client.enable_charge_target()
+            client.enable_charge_target()
         elif payload['state']=="disable":
-            GivClient.client.disable_charge_target()
+            client.disable_charge_target()
         temp['result']="Setting Charge Target was a success"
 
     except:
@@ -56,9 +39,9 @@ def enableChargeSchedule(payload):
     temp={}
     try:
         if payload['state']=="enable":
-            GivClient.client.enable_charge()
+            client.enable_charge()
         elif payload['state']=="disable":
-            GivClient.client.disable_charge()
+            client.disable_charge()
         temp['result']="Setting Charge Enable was a success"
 
     except:
@@ -71,9 +54,9 @@ def enableDischargeSchedule(payload):
     temp={}
     try:
         if payload['state']=="enable":
-            GivClient.client.enable_discharge()
+            client.enable_discharge()
         elif payload['state']=="disable":
-            GivClient.client.disable_discharge()
+            client.disable_discharge()
         temp['result']="Setting Charge Enable was a success"
 
     except:
@@ -85,7 +68,7 @@ def enableDischargeSchedule(payload):
 def setShallowCharge(payload):
     temp={}
     try:
-        GivClient.client.set_shallow_charge(int(payload['val']))
+        client.set_shallow_charge(int(payload['val']))
         temp['result']="Setting Charge Enable was a success"
 
     except:
@@ -98,9 +81,9 @@ def enableDischarge(payload):
     temp={}
     try:
         if payload['state']=="enable":
-            GivClient.client.set_shallow_charge(4)
+            client.set_shallow_charge(4)
         elif payload['state']=="disable":
-            GivClient.client.set_shallow_charge(100)
+            client.set_shallow_charge(100)
         temp['result']="Setting Discharge Enable was a success"
 
     except:
@@ -115,7 +98,7 @@ def setChargeTarget(payload):
     if type(payload) is not dict: payload=json.loads(payload)
     target=int(payload['chargeToPercent'])
     try:
-        result=GivClient.client.enable_charge_target(target)
+        result=client.enable_charge_target(target)
         temp['result']="Setting Charge Target was a success"
 
     except:
@@ -132,7 +115,7 @@ def setBatteryReserve(payload):
     if target<4: target=4
     logger.info ("Setting battery reserve target to: " + str(target))
     try:
-        GivClient.client.set_battery_power_reserve(target)
+        client.set_battery_power_reserve(target)
         temp['result']="Setting Battery Reserve was a success"
 
     except:
@@ -151,7 +134,7 @@ def setChargeRate(payload):
         target=int(int(payload['chargeRate'])/3)
     logger.info ("Setting battery charge rate to: " + str(target))
     try:
-        GivClient.client.set_battery_charge_limit(target)
+        client.set_battery_charge_limit(target)
         temp['result']="Setting Charge Rate was a success"
 
     except:
@@ -171,7 +154,7 @@ def setDischargeRate(payload):
         target=int(int(payload['dischargeRate'])/3)
     logger.info ("Setting battery discharge rate to: " + str(target))
     try:
-        GivClient.client.set_battery_discharge_limit(target)
+        client.set_battery_discharge_limit(target)
         temp['result']="Setting Discharge Rate was a success"
 
     except:
@@ -187,7 +170,7 @@ def setChargeSlot1(payload):
     if 'chargeToPercent' in payload.keys():
         targetresult=setChargeTarget(payload)
     try:
-        GivClient.client.set_charge_slot_1((datetime.strptime(payload['start'],"%H:%M"),datetime.strptime(payload['finish'],"%H:%M")))
+        client.set_charge_slot_1((datetime.strptime(payload['start'],"%H:%M"),datetime.strptime(payload['finish'],"%H:%M")))
         temp['result']="Setting Charge Slot 1 was a success"
 
     except:
@@ -202,7 +185,7 @@ def setChargeSlot2(payload):
     if 'chargeToPercent' in payload.keys():
         targetresult=setChargeTarget(payload)
     try:
-        GivClient.client.set_charge_slot_2((datetime.strptime(payload['start'],"%H:%M"),datetime.strptime(payload['finish'],"%H:%M")))
+        client.set_charge_slot_2((datetime.strptime(payload['start'],"%H:%M"),datetime.strptime(payload['finish'],"%H:%M")))
         temp['result']="Setting Charge Slot 2 was a success"
 
     except:
@@ -220,7 +203,7 @@ def setDischargeSlot1(payload):
     try:
         strt=datetime.strptime(payload['start'],"%H:%M")
         fnsh=datetime.strptime(payload['finish'],"%H:%M")
-        GivClient.client.set_discharge_slot_1((strt,fnsh))
+        client.set_discharge_slot_1((strt,fnsh))
         temp['result']="Setting Discharge Slot 1 was a success"
 
     except:
@@ -237,7 +220,7 @@ def setDischargeSlot2(payload):
         targetresult=setBatteryReserve(payload)
         time.sleep(1)
     try:
-        GivClient.client.set_discharge_slot_2((datetime.strptime(payload['start'],"%H:%M"),datetime.strptime(payload['finish'],"%H:%M")))
+        client.set_discharge_slot_2((datetime.strptime(payload['start'],"%H:%M"),datetime.strptime(payload['finish'],"%H:%M")))
         temp['result']="Setting Discharge Slot 2 was a success"
 
     except:
@@ -294,7 +277,7 @@ def forceExport(exportTime):
         slot1=(datetime.strptime(regCacheStack[4]["Timeslots"]["Discharge_start_time_slot_1"][:5],"%H:%M"),datetime.strptime(regCacheStack[4]["Timeslots"]["Discharge_end_time_slot_1"][:5],"%H:%M")) 
         slot2=(datetime.now(),datetime.now()+timedelta(minutes=exportTime))
         logger.info("Setting export slot to: "+ slot2[0].strftime("%H:%M")+" - "+slot2[1].strftime("%H:%M"))
-        result=GivClient.client.set_mode_storage(slot1,slot2,export=True)
+        result=client.set_mode_storage(slot1,slot2,export=True)
         logger.info("Mode result is:" + str(result))
         
         time.sleep(1)
@@ -456,19 +439,19 @@ def setBatteryMode(payload):
     if type(payload) is not dict: payload=json.loads(payload)
     try:
         if payload['mode']=="Eco":
-            GivClient.client.set_mode_dynamic()
+            client.set_mode_dynamic()
         elif payload['mode']=="Eco (Paused)":
-            GivClient.client.set_mode_dynamic()
+            client.set_mode_dynamic()
             time.sleep(1)
-            GivClient.client.set_shallow_charge(100)
+            client.set_shallow_charge(100)
         elif payload['mode']=="Timed Demand":
-            GivClient.client.set_mode_storage()
+            client.set_mode_storage()
             time.sleep(1)
-            GivClient.client.enable_discharge()
+            client.enable_discharge()
         elif payload['mode']=="Timed Export":
-            GivClient.client.set_mode_storage(export=True)
+            client.set_mode_storage(export=True)
             time.sleep(1)
-            GivClient.client.enable_discharge()
+            client.enable_discharge()
         else:
             logger.info ("Invalid Mode requested: "+ payload['mode'])
             temp['result']="Invalid Mode requested"
@@ -489,7 +472,7 @@ def setDateTime(payload):
     try:
         iDateTime=datetime.strptime(payload['dateTime'],"%d/%m/%Y %H:%M:%S")   #format '12/11/2021 09:15:32'
         #Set Date and Time on Invertor
-        GivClient.client.set_datetime(iDateTime)
+        client.set_datetime(iDateTime)
         temp['result']="Invertor time setting was a success"
 
     except:

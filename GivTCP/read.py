@@ -3,12 +3,7 @@
 from ntpath import join
 import sys
 from pickletools import read_uint1
-import json
-import logging
-from logging.handlers import TimedRotatingFileHandler
-import datetime
-import pickle
-import time
+import json, logging, datetime, pickle, time
 from GivLUT import GivLUT, GivQueue, GivClient
 from settings import GiV_Settings
 from os.path import exists
@@ -23,30 +18,10 @@ from givenergy_modbus.model.plant import Plant
 sys.path.append(GiV_Settings.default_path)
 
 givLUT=GivLUT.entity_type
-
-logger = logging.getLogger("GivTCP_Read_"+str(GiV_Settings.givtcp_instance))
-logging.basicConfig(format='%(asctime)s - %(name)s - [%(levelname)s] - %(message)s')
-formatter = logging.Formatter(
-    '%(asctime)s - %(name)s - [%(levelname)s] - %(message)s')
-fh = TimedRotatingFileHandler(GiV_Settings.Debug_File_Location, when='D', interval=1, backupCount=7)
-fh.setFormatter(formatter)
-logger.addHandler(fh)
-
-if GiV_Settings.Log_Level.lower()=="debug":
-    logger.setLevel(logging.DEBUG)
-elif GiV_Settings.Log_Level.lower()=="info":
-    logger.setLevel(logging.INFO)
-elif GiV_Settings.Log_Level.lower()=="critical":
-    logger.setLevel(logging.CRITICAL)
-elif GiV_Settings.Log_Level.lower()=="warning":
-    logger.setLevel(logging.WARNING)
-else:
-    logger.setLevel(logging.ERROR)
-
-
+logger = GivLUT.logger
 
 def getData(fullrefresh):      #Read from Invertor put in cache 
-    plant=Plant(number_batteries=int(GiV_Settings.numBatteries))
+    #plant=Plant(number_batteries=int(GiV_Settings.numBatteries))
     energy_total_output={}
     energy_today_output={}
     power_output={}
@@ -73,7 +48,8 @@ def getData(fullrefresh):      #Read from Invertor put in cache
         logger.info("Connecting to: "+ GiV_Settings.invertorIP)
         open(GivLUT.lockfile, 'w').close()
 #        client=GivEnergyClient(host=GiV_Settings.invertorIP)
-        GivClient.client.refresh_plant(plant,full_refresh=fullrefresh)
+        
+        plant=GivClient.getData(fullrefresh)
         GEInv=plant.inverter
         GEBat=plant.batteries
         #Close Lockfile to allow access
@@ -97,6 +73,21 @@ def getData(fullrefresh):      #Read from Invertor put in cache
         
         logger.info("Invertor connection successful, registers retrieved")
     except:
+        if exists(GivLUT.oldDataCount):
+            with open(GivLUT.oldDataCount, 'rb') as inp:
+                oldDataCount= pickle.load(inp)
+            oldDataCount=oldDataCount+1
+        else:
+            oldDataCount=1
+        if oldDataCount>5:
+            #5 error in a row so delete regCache data
+            logger.critical("5 failed invertor reads in a row so removing regCache to force update...")
+            os.remove(GivLUT.regcache)
+            os.remove(GivLUT.oldDataCount)
+        else:
+            with open(GivLUT.oldDataCount, 'wb') as outp:
+                pickle.dump(oldDataCount, outp, pickle.HIGHEST_PROTOCOL)
+        logger.critical("oldDataCount= "+str(oldDataCount))
         e = sys.exc_info()
         logger.error("Error collecting registers: " + str(e))
         temp['result']="Error collecting registers: " + str(e)
@@ -509,7 +500,26 @@ def getData(fullrefresh):      #Read from Invertor put in cache
         with open(GivLUT.regcache, 'wb') as outp:
             pickle.dump(regCacheStack, outp, pickle.HIGHEST_PROTOCOL)
         result['result']="Success retrieving data"
+
+        # Success, so delete oldDataCount
+        if exists(GivLUT.oldDataCount):
+            os.remove(GivLUT.oldDataCount)
+
     except:
+        if exists(GivLUT.oldDataCount):
+            with open(GivLUT.oldDataCount, 'rb') as inp:
+                oldDataCount= pickle.load(inp)
+            oldDataCount=oldDataCount+1
+        else:
+            oldDataCount=1
+        if oldDataCount>5:
+            #5 error in a row so delete regCache data
+            logger.critical("5 failed invertor reads in a row so removing regCache to force update...")
+            os.remove(GivLUT.regcache)
+            os.remove(GivLUT.oldDataCount)
+        else:
+            with open(GivLUT.oldDataCount, 'wb') as outp:
+                pickle.dump(oldDataCount, outp, pickle.HIGHEST_PROTOCOL)
         e = sys.exc_info()
         logger.error("Error processing registers: " + str(e))
         logger.error("Invertor Update failed so using last known good data from cache ("+previousUpdate+")")
@@ -521,6 +531,7 @@ def runAll(full_refresh):       #Read from Invertor put in cache and publish
     #full_refresh=True
     from read import getData
     result=GivQueue.q.enqueue(getData,full_refresh)
+    #getData(full_refresh)
     while result.result is None:
         time.sleep(0.5)
     # Step here to validate data against previous pickle?
@@ -747,8 +758,9 @@ def loop_dict(array, regCacheStack,lastUpdate):
             safeoutput[p_load]=temp
             logger.info('Data cleansed for: '+p_load)
         else:
-            #run datasmoother on the data item
-            if p_load in regCacheStack:
+            # run datasmoother on the data item
+            # only run if new and old data exists
+            if p_load in regCacheStack and p_load in array:
                 safeoutput[p_load]=dataSmoother2([p_load,output],[p_load,regCacheStack[p_load]],lastUpdate)
     return(safeoutput)
 

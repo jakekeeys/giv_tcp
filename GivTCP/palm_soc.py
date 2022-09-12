@@ -9,8 +9,7 @@ from typing import Tuple
 import requests
 import palm_settings as stgs
 from settings import GiV_Settings
-import logging
-from logging.handlers import TimedRotatingFileHandler
+from GivLUT import GivLUT
 import write as wr
 
 
@@ -53,24 +52,7 @@ PALM_VERSION = "v0.8.3bSoC"
 #  Future improvements:
 #
 # -*- coding: utf-8 -*-
-logger = logging.getLogger("GivTCP_PALM_"+str(GiV_Settings.givtcp_instance))
-logging.basicConfig(format='%(asctime)s - %(name)s - [%(levelname)s] - %(message)s')
-formatter = logging.Formatter(
-    '%(asctime)s - %(name)s - [%(levelname)s] - %(message)s')
-if GiV_Settings.Debug_File_Location!="":
-    fh = TimedRotatingFileHandler(GiV_Settings.Debug_File_Location, when='D', interval=1, backupCount=7)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-if GiV_Settings.Log_Level.lower()=="debug":
-    logger.setLevel(logging.DEBUG)
-elif GiV_Settings.Log_Level.lower()=="info":
-    logger.setLevel(logging.INFO)
-elif GiV_Settings.Log_Level.lower()=="critical":
-    logger.setLevel(logging.CRITICAL)
-elif GiV_Settings.Log_Level.lower()=="warning":
-    logger.setLevel(logging.WARNING)
-else:
-    logger.setLevel(logging.ERROR)
+logger = GivLUT.logger
 
 
 

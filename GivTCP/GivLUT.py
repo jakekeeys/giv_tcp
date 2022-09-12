@@ -1,13 +1,20 @@
 class GivClient:
-    from givenergy_modbus.client import GivEnergyClient
-    from settings import GiV_Settings
-    client= GivEnergyClient(host=GiV_Settings.invertorIP)
-
+    def getData(fullrefresh):
+        from givenergy_modbus.client import GivEnergyClient
+        from settings import GiV_Settings
+        from givenergy_modbus.model.plant import Plant  
+        
+        client= GivEnergyClient(host=GiV_Settings.invertorIP)
+        plant=Plant(number_batteries=int(GiV_Settings.numBatteries))
+        client.refresh_plant(plant,full_refresh=fullrefresh)
+        return (plant)
+        
 class GivQueue:
     from redis import Redis
-    from rq import Connection, Queue
-    redis_connection = Redis(host='192.168.2.10', port=6379, db=0)
-    q = Queue(connection=redis_connection)
+    from rq import Queue
+    from settings import GiV_Settings
+    redis_connection = Redis(host='127.0.0.1', port=6379, db=0)
+    q = Queue("GivTCP_"+str(GiV_Settings.givtcp_instance),connection=redis_connection)
 
 class GEType:
     def __init__(self,dT,sC,cF,mn,mx,aZ,sM,oI):
@@ -21,8 +28,29 @@ class GEType:
         self.onlyIncrease=oI
 
 class GivLUT:
-    # File paths for use
+    #Logging config
+    import logging, os
     from settings import GiV_Settings
+    from logging.handlers import TimedRotatingFileHandler
+    logging.basicConfig(format='%(asctime)s - %(module)s - [%(levelname)s] - %(message)s')
+    formatter = logging.Formatter(
+        '%(asctime)s - %(module)s - [%(levelname)s] - %(message)s')
+    fh = TimedRotatingFileHandler(GiV_Settings.Debug_File_Location, when='D', interval=1, backupCount=7)
+    fh.setFormatter(formatter)
+    logger = logging.getLogger()
+    logger.addHandler(fh)
+    if str(os.getenv("LOG_LEVEL")).lower()=="debug":
+        logger.setLevel(logging.DEBUG)
+    elif str(os.getenv("LOG_LEVEL")).lower()=="info":
+        logger.setLevel(logging.INFO)
+    elif str(os.getenv("LOG_LEVEL")).lower()=="critical":
+        logger.setLevel(logging.CRITICAL)
+    elif str(os.getenv("LOG_LEVEL")).lower()=="warning":
+        logger.setLevel(logging.WARNING)
+    else:
+        logger.setLevel(logging.ERROR)
+
+    # File paths for use
     lockfile=".lockfile"
     regcache=GiV_Settings.cache_location+"/regCache_"+str(GiV_Settings.givtcp_instance)+".pkl"
     ratedata=GiV_Settings.cache_location+"/rateData_"+str(GiV_Settings.givtcp_instance)+".pkl"
@@ -31,6 +59,7 @@ class GivLUT:
     batterypkl=GiV_Settings.cache_location+"/battery_"+str(GiV_Settings.givtcp_instance)+".pkl"
     ppkwhtouch=".ppkwhtouch"
     schedule=".schedule"
+    oldDataCount=GiV_Settings.cache_location+"/oldDataCount_"+str(GiV_Settings.givtcp_instance)+".pkl"
 
     # Standard values for devices
     maxInvPower=6000

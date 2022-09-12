@@ -1,34 +1,15 @@
 import paho.mqtt.client as mqtt
-import time, sys, importlib,logging, json, time
+import time, sys, importlib, time
 from os.path import exists
-from logging.handlers import TimedRotatingFileHandler
-import settings
 from settings import GiV_Settings
 import write as wr
 import pickle
-from GivLUT import GivQueue, GivLUT, GivClient
+from GivLUT import GivQueue, GivLUT
 from pickletools import read_uint1
 
 sys.path.append(GiV_Settings.default_path)
 
-logger = logging.getLogger("GivTCP_MQTT_Client_"+str(GiV_Settings.givtcp_instance))
-logging.basicConfig(format='%(asctime)s - %(name)s - [%(levelname)s] - %(message)s')
-formatter = logging.Formatter(
-    '%(asctime)s - %(name)s - [%(levelname)s] - %(message)s')
-if GiV_Settings.Debug_File_Location!="":
-    fh = TimedRotatingFileHandler(GiV_Settings.Debug_File_Location, when='D', interval=1, backupCount=7)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-if GiV_Settings.Log_Level.lower()=="debug":
-    logger.setLevel(logging.DEBUG)
-elif GiV_Settings.Log_Level.lower()=="info":
-    logger.setLevel(logging.INFO)
-elif GiV_Settings.Log_Level.lower()=="critical":
-    logger.setLevel(logging.CRITICAL)
-elif GiV_Settings.Log_Level.lower()=="warning":
-    logger.setLevel(logging.WARNING)
-else:
-    logger.setLevel(logging.ERROR)
+logger = GivLUT.logger
 
 if GiV_Settings.MQTT_Port=='':
     MQTT_Port=1883
