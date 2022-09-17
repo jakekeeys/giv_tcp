@@ -29,7 +29,7 @@ class GEType:
 
 class GivLUT:
     #Logging config
-    import logging, os
+    import logging, os, zoneinfo
     from settings import GiV_Settings
     from logging.handlers import TimedRotatingFileHandler
     logging.basicConfig(format='%(asctime)s - %(module)s - [%(levelname)s] - %(message)s')
@@ -60,6 +60,9 @@ class GivLUT:
     ppkwhtouch=".ppkwhtouch"
     schedule=".schedule"
     oldDataCount=GiV_Settings.cache_location+"/oldDataCount_"+str(GiV_Settings.givtcp_instance)+".pkl"
+
+#    timezone=zoneinfo.ZoneInfo(key=os.getenv("TZ"))
+    timezone=zoneinfo.ZoneInfo(key="Europe/London")
 
     # Standard values for devices
     maxInvPower=6000
@@ -229,3 +232,26 @@ class GivLUT:
     def getTime(timestamp):
         timeslot=timestamp.strftime("%H:%M")
         return (timeslot)
+
+    def consecFails():
+        from os.path import exists
+        import os
+        import pickle
+        logger= GivLUT.logger
+
+        if exists(GivLUT.oldDataCount):
+            with open(GivLUT.oldDataCount, 'rb') as inp:
+                oldDataCount= pickle.load(inp)
+            oldDataCount=oldDataCount+1
+        else:
+            oldDataCount=1
+        logger.critical("Consecutive failure count= "+str(oldDataCount))
+        if oldDataCount>10:
+            #5 error in a row so delete regCache data
+            logger.critical("10 failed invertor reads in a row so removing regCache to force update...")
+            os.remove(GivLUT.regcache)
+            os.remove(GivLUT.batterypkl)
+            os.remove(GivLUT.oldDataCount)
+        else:
+            with open(GivLUT.oldDataCount, 'wb') as outp:
+                pickle.dump(oldDataCount, outp, pickle.HIGHEST_PROTOCOL)

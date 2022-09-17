@@ -1,4 +1,724 @@
-2022-09-12 11:58:42,871 - GivTCP_Read_1 - [ERROR] - Error collecting registers: (<class 'KeyError'>, KeyError(HR:120), <traceback object at 0x000002B0F8D0FE00>)
-2022-09-12 11:58:42,871 - GivTCP_Read_1 - [ERROR] - Error collecting registers: (<class 'KeyError'>, KeyError(HR:120), <traceback object at 0x000002B0F8D0FE00>)
-2022-09-12 12:02:07,458 - GivTCP_Read_1 - [ERROR] - Error collecting registers: (<class 'KeyError'>, KeyError(HR:013), <traceback object at 0x000002B0F8D59E40>)
-2022-09-12 12:02:07,458 - GivTCP_Read_1 - [ERROR] - Error collecting registers: (<class 'KeyError'>, KeyError(HR:013), <traceback object at 0x000002B0F8D59E40>)
+2022-09-14 20:48:22,560 - palm_soc - [CRITICAL] - PALM... PV Automated Load Manager Version: v0.8.3bSoC
+2022-09-14 20:48:23,789 - palm_soc - [ERROR] - 404 Client Error: Not Found for url: https://api.solcast.com.au/rooftop_sites/None/forecasts?format=json&api_key=None
+2022-09-14 20:48:23,790 - palm_soc - [ERROR] - Error; Problem reading Solcast data, using previous values (if any)
+2022-09-14 20:48:23,791 - palm_soc - [ERROR] - Incomplete Solcast data, setting target SoC to 100%
+2022-09-14 20:48:23,792 - palm_soc - [ERROR] - Incomplete Solcast data, setting target SoC to 100%
+2022-09-14 20:48:23,792 - palm_soc - [ERROR] - Incomplete Solcast data, setting target SoC to 100%
+2022-09-14 20:48:23,793 - palm_soc - [ERROR] - Incomplete Solcast data, setting target SoC to 100%
+2022-09-14 20:48:23,793 - palm_soc - [CRITICAL] - Setting Charge Target to: 100%
+2022-09-14 20:48:23,794 - write - [CRITICAL] - Setting target SOC to: 100
+2022-09-14 20:48:24,143 - palm_soc - [CRITICAL] - {"result": "Setting Charge Target was a success"}
+2022-09-14 20:50:45,754 - palm_soc - [CRITICAL] - PALM... PV Automated Load Manager Version: v0.8.3bSoC
+2022-09-14 20:51:11,982 - palm_soc - [CRITICAL] - PALM... PV Automated Load Manager Version: v0.8.3bSoC
+2022-09-14 21:24:24,323 - GivLUT - [CRITICAL] - Consecutive failure count= 1
+2022-09-14 21:24:24,327 - read - [ERROR] - Error processing registers: (<class 'zoneinfo._common.ZoneInfoNotFoundError'>, ZoneInfoNotFoundError('No time zone found with key Europe/London'), <traceback object at 0x00000186A47D9DC0>)
+2022-09-14 21:24:24,328 - read - [ERROR] - Invertor Update failed so using last known good data from cache (2022-09-14T20:22:18.567555+00:00)
+2022-09-14 21:26:56,742 - GivLUT - [CRITICAL] - Consecutive failure count= 2
+2022-09-14 21:26:56,744 - read - [ERROR] - Error processing registers: (<class 'TypeError'>, TypeError("'tzinfo' is an invalid keyword argument for now()"), <traceback object at 0x0000016495FCD400>)
+2022-09-14 21:26:56,745 - read - [ERROR] - Invertor Update failed so using last known good data from cache (2022-09-14T20:24:30.783736+00:00)
+2022-09-15 08:36:22,806 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 08:36:22,810 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 08:36:22,814 - GivLUT - [CRITICAL] - Consecutive failure count= 3
+2022-09-15 08:36:22,816 - read - [ERROR] - Error processing registers: (<class 'TypeError'>, TypeError('expected str, bytes or os.PathLike object, not NoneType'), <traceback object at 0x00000287E0D44D80>)
+2022-09-15 08:36:22,817 - read - [ERROR] - Invertor Update failed so using last known good data from cache (2022-09-14T20:27:30.995098+00:00)
+2022-09-15 08:36:29,580 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 08:36:29,582 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 08:36:29,585 - GivLUT - [CRITICAL] - Consecutive failure count= 4
+2022-09-15 08:36:29,586 - read - [ERROR] - Error processing registers: (<class 'TypeError'>, TypeError('expected str, bytes or os.PathLike object, not NoneType'), <traceback object at 0x00000287E0D18E00>)
+2022-09-15 08:36:29,587 - read - [ERROR] - Invertor Update failed so using last known good data from cache (2022-09-15T07:36:22.790120+00:00)
+2022-09-15 08:37:26,390 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 08:37:26,392 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 08:37:26,395 - GivLUT - [CRITICAL] - Consecutive failure count= 5
+2022-09-15 08:37:37,685 - read - [ERROR] - Error processing registers: (<class 'TypeError'>, TypeError('expected str, bytes or os.PathLike object, not NoneType'), <traceback object at 0x00000164D6F10F80>)
+2022-09-15 08:38:00,688 - read - [ERROR] - Invertor Update failed so using last known good data from cache (2022-09-15T07:36:29.575578+00:00)
+2022-09-15 08:38:20,593 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 08:38:23,184 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 08:39:08,619 - GivLUT - [CRITICAL] - Consecutive failure count= 6
+2022-09-15 08:40:35,297 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 08:40:36,478 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 08:40:43,351 - GivLUT - [CRITICAL] - Consecutive failure count= 6
+2022-09-15 08:40:54,355 - read - [ERROR] - Error processing registers: (<class 'TypeError'>, TypeError('expected str, bytes or os.PathLike object, not NoneType'), <traceback object at 0x000001A437B507C0>)
+2022-09-15 08:40:54,357 - read - [ERROR] - Invertor Update failed so using last known good data from cache (2022-09-15T07:38:07.477369+00:00)
+2022-09-15 08:41:03,377 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 08:41:04,014 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 08:41:04,022 - GivLUT - [CRITICAL] - Consecutive failure count= 7
+2022-09-15 08:41:11,705 - read - [ERROR] - Error processing registers: (<class 'TypeError'>, TypeError('expected str, bytes or os.PathLike object, not NoneType'), <traceback object at 0x000001A437CEEE80>)
+2022-09-15 08:41:12,433 - read - [ERROR] - Invertor Update failed so using last known good data from cache (2022-09-15T07:40:32.120720+00:00)
+2022-09-15 08:41:32,605 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 08:41:33,364 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 08:41:33,371 - GivLUT - [CRITICAL] - Consecutive failure count= 8
+2022-09-15 08:41:45,424 - read - [ERROR] - Error processing registers: (<class 'TypeError'>, TypeError('expected str, bytes or os.PathLike object, not NoneType'), <traceback object at 0x000001A437D54F40>)
+2022-09-15 08:41:45,427 - read - [ERROR] - Invertor Update failed so using last known good data from cache (2022-09-15T07:41:01.057477+00:00)
+2022-09-15 08:41:59,813 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 08:42:06,470 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 08:43:58,261 - GivLUT - [CRITICAL] - Consecutive failure count= 9
+2022-09-15 08:44:05,881 - read - [ERROR] - Error processing registers: (<class 'TypeError'>, TypeError('expected str, bytes or os.PathLike object, not NoneType'), <traceback object at 0x000001A437C08780>)
+2022-09-15 08:44:05,883 - read - [ERROR] - Invertor Update failed so using last known good data from cache (2022-09-15T07:41:29.119987+00:00)
+2022-09-15 08:44:18,827 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 08:44:23,012 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 08:44:50,997 - GivLUT - [CRITICAL] - Consecutive failure count= 10
+2022-09-15 08:44:51,000 - read - [ERROR] - Error processing registers: (<class 'TypeError'>, TypeError('expected str, bytes or os.PathLike object, not NoneType'), <traceback object at 0x000001A437CF7F40>)
+2022-09-15 08:44:51,001 - read - [ERROR] - Invertor Update failed so using last known good data from cache (2022-09-15T07:41:57.250760+00:00)
+2022-09-15 08:45:02,960 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 08:45:02,961 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 08:48:51,702 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 08:48:51,706 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 08:48:51,717 - GivLUT - [CRITICAL] - Consecutive failure count= 11
+2022-09-15 08:48:51,718 - GivLUT - [CRITICAL] - 10 failed invertor reads in a row so removing regCache to force update...
+2022-09-15 08:48:51,720 - read - [ERROR] - Error processing registers: (<class 'TypeError'>, TypeError("can't compare offset-naive and offset-aware datetimes"), <traceback object at 0x000001AF987CEA80>)
+2022-09-15 08:48:51,720 - read - [ERROR] - Invertor Update failed so using last known good data from cache (2022-09-15T07:45:02.957414+00:00)
+2022-09-15 08:48:57,085 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 08:48:57,087 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 08:48:57,091 - read - [CRITICAL] - First time running so saving AC Charge status
+2022-09-15 08:55:49,912 - GivLUT - [CRITICAL] - Consecutive failure count= 1
+2022-09-15 08:55:49,916 - read - [ERROR] - Error processing registers: (<class 'UnboundLocalError'>, UnboundLocalError("local variable 'multi_output_old' referenced before assignment"), <traceback object at 0x000001AF986F6C00>)
+2022-09-15 08:55:49,917 - read - [ERROR] - Invertor Update failed so using last known good data from cache (2022-09-15T07:48:51.694349+00:00)
+2022-09-15 08:56:28,492 - read - [ERROR] - Lockfile set so aborting getData
+2022-09-15 08:56:28,495 - read - [ERROR] - Lockfile set so aborting getData
+2022-09-15 08:56:28,496 - read - [ERROR] - Lockfile set so aborting getData
+2022-09-15 08:56:28,497 - read - [ERROR] - Lockfile set so aborting getData
+2022-09-15 08:56:33,507 - read - [ERROR] - Lockfile set so aborting getData
+2022-09-15 08:56:33,509 - read - [ERROR] - Lockfile set so aborting getData
+2022-09-15 08:56:38,520 - read - [ERROR] - Lockfile set so aborting getData
+2022-09-15 08:56:38,523 - read - [ERROR] - Lockfile set so aborting getData
+2022-09-15 08:56:43,540 - read - [ERROR] - Lockfile set so aborting getData
+2022-09-15 08:56:43,541 - read - [ERROR] - Lockfile set so aborting getData
+2022-09-15 08:56:53,989 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 08:56:53,990 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 08:57:02,321 - read - [CRITICAL] - New data is different, so not saving into regCacheStack
+2022-09-15 08:57:07,618 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 08:57:07,619 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:00:00,428 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:00:00,429 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:00:07,874 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:00:07,874 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:02:37,086 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:02:37,087 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:02:48,730 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:02:48,731 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:03:01,156 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:03:01,157 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:03:19,216 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:03:19,217 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:04:20,493 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:04:20,494 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:04:28,568 - GivLUT - [CRITICAL] - Consecutive failure count= 1
+2022-09-15 09:04:28,571 - read - [ERROR] - Error processing registers: (<class 'KeyError'>, KeyError('DY2218G498'), <traceback object at 0x000001F9292DFE00>)
+2022-09-15 09:04:28,572 - read - [ERROR] - Invertor Update failed so using last known good data from cache (2022-09-15T08:03:19.214661+00:00)
+2022-09-15 09:04:35,050 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:04:35,051 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:04:51,704 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:04:51,705 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:05:04,832 - read - [CRITICAL] - New data is different, so not saving into regCacheStack
+2022-09-15 09:05:16,298 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:05:16,298 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:15:27,336 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:15:27,338 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:15:36,066 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:15:36,067 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:17:15,268 - read - [CRITICAL] - New data is different, so not saving into regCacheStack
+2022-09-15 09:17:21,825 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:17:21,826 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:17:54,514 - GivLUT - [CRITICAL] - Consecutive failure count= 1
+2022-09-15 09:17:54,517 - read - [ERROR] - Error collecting registers: (<class 'KeyError'>, KeyError(HR:120), <traceback object at 0x0000014CD0C9A4C0>)
+2022-09-15 09:18:00,781 - GivLUT - [CRITICAL] - Consecutive failure count= 2
+2022-09-15 09:18:00,782 - read - [ERROR] - Error collecting registers: (<class 'KeyError'>, KeyError(HR:013), <traceback object at 0x0000014CD0CB94C0>)
+2022-09-15 09:18:13,410 - GivLUT - [CRITICAL] - Consecutive failure count= 3
+2022-09-15 09:18:13,413 - read - [ERROR] - Error collecting registers: (<class 'KeyError'>, KeyError(HR:113), <traceback object at 0x0000014CD0CED880>)
+2022-09-15 09:18:25,103 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:18:25,105 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:18:37,848 - read - [CRITICAL] - Battery_Details is missing from new data
+2022-09-15 09:18:37,849 - read - [CRITICAL] - New data is different, so not saving into regCacheStack
+2022-09-15 09:18:49,207 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:18:49,209 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:23:20,133 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:23:20,134 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:23:33,138 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:23:33,138 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:24:07,147 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:24:07,147 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:24:07,155 - GivLUT - [CRITICAL] - Consecutive failure count= 1
+2022-09-15 09:24:07,156 - read - [ERROR] - Error processing registers: (<class 'KeyError'>, KeyError('Batteyr_Details'), <traceback object at 0x00000188C77A21C0>)
+2022-09-15 09:24:07,156 - read - [ERROR] - Invertor Update failed so using last known good data from cache (2022-09-15T08:23:33.136517+00:00)
+2022-09-15 09:24:14,474 - GivLUT - [CRITICAL] - Consecutive failure count= 2
+2022-09-15 09:24:14,479 - read - [ERROR] - Error collecting registers: (<class 'KeyError'>, KeyError(HR:013), <traceback object at 0x0000024BD9535840>)
+2022-09-15 09:24:21,084 - GivLUT - [CRITICAL] - Consecutive failure count= 3
+2022-09-15 09:24:21,087 - read - [ERROR] - Error collecting registers: (<class 'KeyError'>, KeyError(HR:113), <traceback object at 0x0000024BD95554C0>)
+2022-09-15 09:24:35,472 - GivLUT - [CRITICAL] - Consecutive failure count= 4
+2022-09-15 09:24:35,475 - read - [ERROR] - Error collecting registers: (<class 'KeyError'>, KeyError(HR:120), <traceback object at 0x0000024BD952CC00>)
+2022-09-15 09:24:46,915 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:24:46,916 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:24:46,925 - read - [CRITICAL] - Last_Updated_Time is in new data
+2022-09-15 09:24:46,925 - read - [CRITICAL] - Time_Since_Last_Update is in new data
+2022-09-15 09:24:46,926 - read - [CRITICAL] - status is in new data
+2022-09-15 09:24:46,927 - read - [CRITICAL] - Power is in new data
+2022-09-15 09:24:46,927 - read - [CRITICAL] - Invertor_Details is in new data
+2022-09-15 09:24:46,928 - read - [CRITICAL] - Energy is in new data
+2022-09-15 09:24:46,928 - read - [CRITICAL] - Timeslots is in new data
+2022-09-15 09:24:46,929 - read - [CRITICAL] - Control is in new data
+2022-09-15 09:24:46,930 - read - [CRITICAL] - Battery_Details is missing from new data
+2022-09-15 09:24:46,930 - read - [CRITICAL] - raw is in new data
+2022-09-15 09:24:46,931 - read - [CRITICAL] - New data is different, so not saving into regCacheStack
+2022-09-15 09:49:43,789 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:49:43,790 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:49:43,798 - GivLUT - [CRITICAL] - Consecutive failure count= 5
+2022-09-15 09:49:43,799 - read - [ERROR] - Error processing registers: (<class 'AttributeError'>, AttributeError("'dict' object has no attribute 'append'"), <traceback object at 0x000002EA489E6D40>)
+2022-09-15 09:49:43,800 - read - [ERROR] - Invertor Update failed so using last known good data from cache (2022-09-15T08:24:46.912383+00:00)
+2022-09-15 09:49:50,395 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:49:50,397 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:49:50,400 - GivLUT - [CRITICAL] - Consecutive failure count= 6
+2022-09-15 09:49:50,402 - read - [ERROR] - Error processing registers: (<class 'AttributeError'>, AttributeError("'dict' object has no attribute 'append'"), <traceback object at 0x000002EA48A39600>)
+2022-09-15 09:49:50,402 - read - [ERROR] - Invertor Update failed so using last known good data from cache (2022-09-15T08:49:43.786728+00:00)
+2022-09-15 09:50:02,011 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:50:02,012 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:50:02,016 - GivLUT - [CRITICAL] - Consecutive failure count= 7
+2022-09-15 09:50:02,017 - read - [ERROR] - Error processing registers: (<class 'AttributeError'>, AttributeError("'dict' object has no attribute 'append'"), <traceback object at 0x000002EA48A19500>)
+2022-09-15 09:50:02,018 - read - [ERROR] - Invertor Update failed so using last known good data from cache (2022-09-15T08:49:50.393953+00:00)
+2022-09-15 09:50:13,638 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:50:13,639 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:50:13,642 - GivLUT - [CRITICAL] - Consecutive failure count= 8
+2022-09-15 09:50:13,643 - read - [ERROR] - Error processing registers: (<class 'AttributeError'>, AttributeError("'dict' object has no attribute 'append'"), <traceback object at 0x000002EA48A2C180>)
+2022-09-15 09:50:13,643 - read - [ERROR] - Invertor Update failed so using last known good data from cache (2022-09-15T08:50:02.009502+00:00)
+2022-09-15 09:50:42,590 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:50:42,591 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:51:53,548 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:51:53,549 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:53:14,307 - read - [CRITICAL] - Last_Updated_Time is in new data
+2022-09-15 09:53:14,308 - read - [CRITICAL] - Time_Since_Last_Update is in new data
+2022-09-15 09:53:14,309 - read - [CRITICAL] - status is in new data
+2022-09-15 09:53:14,309 - read - [CRITICAL] - Power is in new data
+2022-09-15 09:53:14,310 - read - [CRITICAL] - Invertor_Details is in new data
+2022-09-15 09:53:14,310 - read - [CRITICAL] - Energy is in new data
+2022-09-15 09:53:14,311 - read - [CRITICAL] - Timeslots is in new data
+2022-09-15 09:53:14,312 - read - [CRITICAL] - Control is in new data
+2022-09-15 09:53:14,313 - read - [CRITICAL] - Battery_Details is missing from new data
+2022-09-15 09:53:14,313 - read - [CRITICAL] - raw is in new data
+2022-09-15 09:53:14,313 - read - [CRITICAL] - New data is different, so not saving into regCacheStack
+2022-09-15 09:53:25,863 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:53:25,865 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:54:36,690 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:54:36,692 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:57:06,980 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:57:06,981 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:57:36,306 - GivLUT - [CRITICAL] - Consecutive failure count= 1
+2022-09-15 09:57:36,308 - read - [ERROR] - Error collecting registers: (<class 'KeyError'>, KeyError(HR:113), <traceback object at 0x000001B8D40701C0>)
+2022-09-15 09:57:48,767 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:57:48,768 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:58:00,066 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:58:00,067 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:58:30,624 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:58:30,624 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:59:30,357 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 09:59:30,359 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 09:59:54,957 - read - [ERROR] - Lockfile set so aborting getData
+2022-09-15 09:59:57,246 - read - [ERROR] - Lockfile set so aborting getData
+2022-09-15 10:00:09,963 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 10:00:09,965 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 10:00:20,095 - read - [CRITICAL] - Last_Updated_Time is in new data
+2022-09-15 10:00:20,097 - read - [CRITICAL] - Time_Since_Last_Update is in new data
+2022-09-15 10:00:20,098 - read - [CRITICAL] - status is in new data
+2022-09-15 10:00:20,099 - read - [CRITICAL] - PV_Power_String_1 is in new data
+2022-09-15 10:00:20,100 - read - [CRITICAL] - PV_Power_String_2 is in new data
+2022-09-15 10:00:20,100 - read - [CRITICAL] - PV_Power is in new data
+2022-09-15 10:00:20,101 - read - [CRITICAL] - PV_Voltage_String_1 is in new data
+2022-09-15 10:00:20,102 - read - [CRITICAL] - PV_Voltage_String_2 is in new data
+2022-09-15 10:00:20,103 - read - [CRITICAL] - PV_Current_String_1 is in new data
+2022-09-15 10:00:20,103 - read - [CRITICAL] - PV_Current_String_2 is in new data
+2022-09-15 10:00:20,104 - read - [CRITICAL] - Grid_Power is in new data
+2022-09-15 10:00:20,104 - read - [CRITICAL] - Import_Power is in new data
+2022-09-15 10:00:20,105 - read - [CRITICAL] - Export_Power is in new data
+2022-09-15 10:00:20,106 - read - [CRITICAL] - EPS_Power is in new data
+2022-09-15 10:00:20,106 - read - [CRITICAL] - Invertor_Power is in new data
+2022-09-15 10:00:20,107 - read - [CRITICAL] - AC_Charge_Power is in new data
+2022-09-15 10:00:20,107 - read - [CRITICAL] - Load_Power is in new data
+2022-09-15 10:00:20,108 - read - [CRITICAL] - Self_Consumption_Power is in new data
+2022-09-15 10:00:20,108 - read - [CRITICAL] - SOC is in new data
+2022-09-15 10:00:20,109 - read - [CRITICAL] - SOC_kWh is in new data
+2022-09-15 10:00:20,109 - read - [CRITICAL] - Battery_Power is in new data
+2022-09-15 10:00:20,109 - read - [CRITICAL] - Charge_Power is in new data
+2022-09-15 10:00:20,110 - read - [CRITICAL] - Discharge_Power is in new data
+2022-09-15 10:00:20,110 - read - [CRITICAL] - Solar_to_House is in new data
+2022-09-15 10:00:20,112 - read - [CRITICAL] - Solar_to_Grid is in new data
+2022-09-15 10:00:20,113 - read - [CRITICAL] - Grid_to_House is in new data
+2022-09-15 10:00:20,114 - read - [CRITICAL] - Solar_to_Battery is in new data
+2022-09-15 10:00:20,115 - read - [CRITICAL] - Battery_to_House is in new data
+2022-09-15 10:00:20,115 - read - [CRITICAL] - Grid_to_Battery is in new data
+2022-09-15 10:00:20,116 - read - [CRITICAL] - Battery_to_Grid is in new data
+2022-09-15 10:00:20,116 - read - [CRITICAL] - Battery_Type is in new data
+2022-09-15 10:00:20,118 - read - [CRITICAL] - Battery_Capacity_kWh is in new data
+2022-09-15 10:00:20,118 - read - [CRITICAL] - Invertor_Serial_Number is in new data
+2022-09-15 10:00:20,119 - read - [CRITICAL] - Modbus_Version is in new data
+2022-09-15 10:00:20,119 - read - [CRITICAL] - Meter_Type is in new data
+2022-09-15 10:00:20,120 - read - [CRITICAL] - Invertor_Type is in new data
+2022-09-15 10:00:20,120 - read - [CRITICAL] - Invertor_Temperature is in new data
+2022-09-15 10:00:20,121 - read - [CRITICAL] - PV_Energy_Today_kWh is in new data
+2022-09-15 10:00:20,121 - read - [CRITICAL] - Import_Energy_Today_kWh is in new data
+2022-09-15 10:00:20,122 - read - [CRITICAL] - Export_Energy_Today_kWh is in new data
+2022-09-15 10:00:20,122 - read - [CRITICAL] - AC_Charge_Energy_Today_kWh is in new data
+2022-09-15 10:00:20,123 - read - [CRITICAL] - Invertor_Energy_Today_kWh is in new data
+2022-09-15 10:00:20,124 - read - [CRITICAL] - Self_Consumption_Energy_Today_kWh is in new data
+2022-09-15 10:00:20,124 - read - [CRITICAL] - Load_Energy_Today_kWh is in new data
+2022-09-15 10:00:20,126 - read - [CRITICAL] - Battery_Charge_Energy_Today_kWh is in new data
+2022-09-15 10:00:20,127 - read - [CRITICAL] - Battery_Discharge_Energy_Today_kWh is in new data
+2022-09-15 10:00:20,127 - read - [CRITICAL] - Battery_Throughput_Today_kWh is in new data
+2022-09-15 10:00:20,128 - read - [CRITICAL] - Export_Energy_Total_kWh is in new data
+2022-09-15 10:00:20,129 - read - [CRITICAL] - Import_Energy_Total_kWh is in new data
+2022-09-15 10:00:20,130 - read - [CRITICAL] - Invertor_Energy_Total_kWh is in new data
+2022-09-15 10:00:20,130 - read - [CRITICAL] - PV_Energy_Total_kWh is in new data
+2022-09-15 10:00:20,131 - read - [CRITICAL] - AC_Charge_Energy_Total_kWh is in new data
+2022-09-15 10:00:20,132 - read - [CRITICAL] - Load_Energy_Total_kWh is in new data
+2022-09-15 10:00:20,132 - read - [CRITICAL] - Self_Consumption_Energy_Total_kWh is in new data
+2022-09-15 10:00:20,133 - read - [CRITICAL] - Battery_Throughput_Total_kWh is in new data
+2022-09-15 10:00:20,133 - read - [CRITICAL] - Battery_Charge_Energy_Total_kWh is in new data
+2022-09-15 10:00:20,134 - read - [CRITICAL] - Battery_Discharge_Energy_Total_kWh is in new data
+2022-09-15 10:00:20,135 - read - [CRITICAL] - Night_Start_Energy_kWh is in new data
+2022-09-15 10:00:20,135 - read - [CRITICAL] - Day_Start_Energy_kWh is in new data
+2022-09-15 10:00:20,136 - read - [CRITICAL] - Night_Energy_kWh is in new data
+2022-09-15 10:00:20,136 - read - [CRITICAL] - Day_Energy_kWh is in new data
+2022-09-15 10:00:20,136 - read - [CRITICAL] - Night_Cost is in new data
+2022-09-15 10:00:20,137 - read - [CRITICAL] - Day_Cost is in new data
+2022-09-15 10:00:20,137 - read - [CRITICAL] - Day_Rate is in new data
+2022-09-15 10:00:20,138 - read - [CRITICAL] - Night_Rate is in new data
+2022-09-15 10:00:20,138 - read - [CRITICAL] - Export_Rate is in new data
+2022-09-15 10:00:20,138 - read - [CRITICAL] - Current_Rate is in new data
+2022-09-15 10:00:20,158 - read - [CRITICAL] - Import_ppkwh_Today is in new data
+2022-09-15 10:00:20,168 - read - [CRITICAL] - Battery_Value is in new data
+2022-09-15 10:00:20,169 - read - [CRITICAL] - Battery_ppkwh is in new data
+2022-09-15 10:00:20,169 - read - [CRITICAL] - Discharge_start_time_slot_1 is in new data
+2022-09-15 10:00:20,170 - read - [CRITICAL] - Discharge_end_time_slot_1 is in new data
+2022-09-15 10:00:20,170 - read - [CRITICAL] - Discharge_start_time_slot_2 is in new data
+2022-09-15 10:00:20,172 - read - [CRITICAL] - Discharge_end_time_slot_2 is in new data
+2022-09-15 10:00:20,174 - read - [CRITICAL] - Charge_start_time_slot_1 is in new data
+2022-09-15 10:00:20,175 - read - [CRITICAL] - Charge_end_time_slot_1 is in new data
+2022-09-15 10:00:20,175 - read - [CRITICAL] - Charge_start_time_slot_2 is in new data
+2022-09-15 10:00:20,176 - read - [CRITICAL] - Charge_end_time_slot_2 is in new data
+2022-09-15 10:00:20,176 - read - [CRITICAL] - Mode is in new data
+2022-09-15 10:00:20,177 - read - [CRITICAL] - Battery_Power_Reserve is in new data
+2022-09-15 10:00:20,177 - read - [CRITICAL] - Target_SOC is in new data
+2022-09-15 10:00:20,178 - read - [CRITICAL] - Enable_Charge_Schedule is in new data
+2022-09-15 10:00:20,178 - read - [CRITICAL] - Enable_Discharge_Schedule is in new data
+2022-09-15 10:00:20,179 - read - [CRITICAL] - Enable_Discharge is in new data
+2022-09-15 10:00:20,179 - read - [CRITICAL] - Battery_Charge_Rate is in new data
+2022-09-15 10:00:20,179 - read - [CRITICAL] - Battery_Discharge_Rate is in new data
+2022-09-15 10:00:20,179 - read - [CRITICAL] - Force_Charge is in new data
+2022-09-15 10:00:20,180 - read - [CRITICAL] - Force_Export is in new data
+2022-09-15 10:00:20,180 - read - [CRITICAL] - Temp_Pause_Charge is in new data
+2022-09-15 10:00:20,181 - read - [CRITICAL] - Temp_Pause_Discharge is in new data
+2022-09-15 10:00:20,181 - read - [CRITICAL] - Battery_Serial_Number is missing from new data
+2022-09-15 10:00:20,182 - read - [CRITICAL] - Battery_SOC is missing from new data
+2022-09-15 10:00:20,183 - read - [CRITICAL] - Battery_Capacity is missing from new data
+2022-09-15 10:00:20,184 - read - [CRITICAL] - Battery_Design_Capacity is missing from new data
+2022-09-15 10:00:20,185 - read - [CRITICAL] - Battery_Remaining_Capacity is missing from new data
+2022-09-15 10:00:20,186 - read - [CRITICAL] - Battery_Firmware_Version is missing from new data
+2022-09-15 10:00:20,187 - read - [CRITICAL] - Battery_Cells is missing from new data
+2022-09-15 10:00:20,190 - read - [CRITICAL] - Battery_Cycles is missing from new data
+2022-09-15 10:00:20,191 - read - [CRITICAL] - Battery_USB_present is missing from new data
+2022-09-15 10:00:20,192 - read - [CRITICAL] - Battery_Temperature is missing from new data
+2022-09-15 10:00:20,192 - read - [CRITICAL] - Battery_Voltage is missing from new data
+2022-09-15 10:00:20,193 - read - [CRITICAL] - Battery_Cell_1_Voltage is missing from new data
+2022-09-15 10:00:20,193 - read - [CRITICAL] - Battery_Cell_2_Voltage is missing from new data
+2022-09-15 10:00:20,194 - read - [CRITICAL] - Battery_Cell_3_Voltage is missing from new data
+2022-09-15 10:00:20,194 - read - [CRITICAL] - Battery_Cell_4_Voltage is missing from new data
+2022-09-15 10:00:20,195 - read - [CRITICAL] - Battery_Cell_5_Voltage is missing from new data
+2022-09-15 10:00:20,195 - read - [CRITICAL] - Battery_Cell_6_Voltage is missing from new data
+2022-09-15 10:00:20,197 - read - [CRITICAL] - Battery_Cell_7_Voltage is missing from new data
+2022-09-15 10:00:20,198 - read - [CRITICAL] - Battery_Cell_8_Voltage is missing from new data
+2022-09-15 10:00:20,199 - read - [CRITICAL] - Battery_Cell_9_Voltage is missing from new data
+2022-09-15 10:00:20,199 - read - [CRITICAL] - Battery_Cell_10_Voltage is missing from new data
+2022-09-15 10:00:20,200 - read - [CRITICAL] - Battery_Cell_11_Voltage is missing from new data
+2022-09-15 10:00:20,200 - read - [CRITICAL] - Battery_Cell_12_Voltage is missing from new data
+2022-09-15 10:00:20,201 - read - [CRITICAL] - Battery_Cell_13_Voltage is missing from new data
+2022-09-15 10:00:20,204 - read - [CRITICAL] - Battery_Cell_14_Voltage is missing from new data
+2022-09-15 10:00:20,209 - read - [CRITICAL] - Battery_Cell_15_Voltage is missing from new data
+2022-09-15 10:00:20,211 - read - [CRITICAL] - Battery_Cell_16_Voltage is missing from new data
+2022-09-15 10:00:20,216 - read - [CRITICAL] - Battery_Cell_1_Temperature is missing from new data
+2022-09-15 10:00:20,216 - read - [CRITICAL] - Battery_Cell_2_Temperature is missing from new data
+2022-09-15 10:00:20,218 - read - [CRITICAL] - Battery_Cell_3_Temperature is missing from new data
+2022-09-15 10:00:20,218 - read - [CRITICAL] - Battery_Cell_4_Temperature is missing from new data
+2022-09-15 10:00:20,218 - read - [CRITICAL] - Battery_Serial_Number is missing from new data
+2022-09-15 10:00:20,218 - read - [CRITICAL] - Battery_SOC is missing from new data
+2022-09-15 10:00:20,220 - read - [CRITICAL] - Battery_Capacity is missing from new data
+2022-09-15 10:00:20,221 - read - [CRITICAL] - Battery_Design_Capacity is missing from new data
+2022-09-15 10:00:20,221 - read - [CRITICAL] - Battery_Remaining_Capacity is missing from new data
+2022-09-15 10:00:20,222 - read - [CRITICAL] - Battery_Firmware_Version is missing from new data
+2022-09-15 10:00:20,222 - read - [CRITICAL] - Battery_Cells is missing from new data
+2022-09-15 10:00:20,223 - read - [CRITICAL] - Battery_Cycles is missing from new data
+2022-09-15 10:00:20,223 - read - [CRITICAL] - Battery_USB_present is missing from new data
+2022-09-15 10:00:20,224 - read - [CRITICAL] - Battery_Temperature is missing from new data
+2022-09-15 10:00:20,224 - read - [CRITICAL] - Battery_Voltage is missing from new data
+2022-09-15 10:00:20,225 - read - [CRITICAL] - Battery_Cell_1_Voltage is missing from new data
+2022-09-15 10:00:20,225 - read - [CRITICAL] - Battery_Cell_2_Voltage is missing from new data
+2022-09-15 10:00:20,226 - read - [CRITICAL] - Battery_Cell_3_Voltage is missing from new data
+2022-09-15 10:00:20,226 - read - [CRITICAL] - Battery_Cell_4_Voltage is missing from new data
+2022-09-15 10:00:20,227 - read - [CRITICAL] - Battery_Cell_5_Voltage is missing from new data
+2022-09-15 10:00:20,227 - read - [CRITICAL] - Battery_Cell_6_Voltage is missing from new data
+2022-09-15 10:00:20,228 - read - [CRITICAL] - Battery_Cell_7_Voltage is missing from new data
+2022-09-15 10:00:20,228 - read - [CRITICAL] - Battery_Cell_8_Voltage is missing from new data
+2022-09-15 10:00:20,229 - read - [CRITICAL] - Battery_Cell_9_Voltage is missing from new data
+2022-09-15 10:00:20,229 - read - [CRITICAL] - Battery_Cell_10_Voltage is missing from new data
+2022-09-15 10:00:20,230 - read - [CRITICAL] - Battery_Cell_11_Voltage is missing from new data
+2022-09-15 10:00:20,230 - read - [CRITICAL] - Battery_Cell_12_Voltage is missing from new data
+2022-09-15 10:00:20,231 - read - [CRITICAL] - Battery_Cell_13_Voltage is missing from new data
+2022-09-15 10:00:20,231 - read - [CRITICAL] - Battery_Cell_14_Voltage is missing from new data
+2022-09-15 10:00:20,233 - read - [CRITICAL] - Battery_Cell_15_Voltage is missing from new data
+2022-09-15 10:00:20,234 - read - [CRITICAL] - Battery_Cell_16_Voltage is missing from new data
+2022-09-15 10:00:20,234 - read - [CRITICAL] - Battery_Cell_1_Temperature is missing from new data
+2022-09-15 10:00:20,234 - read - [CRITICAL] - Battery_Cell_2_Temperature is missing from new data
+2022-09-15 10:00:20,235 - read - [CRITICAL] - Battery_Cell_3_Temperature is missing from new data
+2022-09-15 10:00:20,235 - read - [CRITICAL] - Battery_Cell_4_Temperature is missing from new data
+2022-09-15 10:00:20,236 - read - [CRITICAL] - inverter_serial_number is in new data
+2022-09-15 10:00:20,236 - read - [CRITICAL] - device_type_code is in new data
+2022-09-15 10:00:20,237 - read - [CRITICAL] - inverter_module is in new data
+2022-09-15 10:00:20,237 - read - [CRITICAL] - dsp_firmware_version is in new data
+2022-09-15 10:00:20,238 - read - [CRITICAL] - arm_firmware_version is in new data
+2022-09-15 10:00:20,239 - read - [CRITICAL] - usb_device_inserted is in new data
+2022-09-15 10:00:20,239 - read - [CRITICAL] - select_arm_chip is in new data
+2022-09-15 10:00:20,240 - read - [CRITICAL] - meter_type is in new data
+2022-09-15 10:00:20,240 - read - [CRITICAL] - reverse_115_meter_direct is in new data
+2022-09-15 10:00:20,240 - read - [CRITICAL] - reverse_418_meter_direct is in new data
+2022-09-15 10:00:20,241 - read - [CRITICAL] - enable_drm_rj45_port is in new data
+2022-09-15 10:00:20,242 - read - [CRITICAL] - ct_adjust is in new data
+2022-09-15 10:00:20,242 - read - [CRITICAL] - enable_buzzer is in new data
+2022-09-15 10:00:20,243 - read - [CRITICAL] - num_mppt is in new data
+2022-09-15 10:00:20,244 - read - [CRITICAL] - num_phases is in new data
+2022-09-15 10:00:20,246 - read - [CRITICAL] - enable_ammeter is in new data
+2022-09-15 10:00:20,247 - read - [CRITICAL] - p_grid_port_max_output is in new data
+2022-09-15 10:00:20,248 - read - [CRITICAL] - enable_60hz_freq_mode is in new data
+2022-09-15 10:00:20,249 - read - [CRITICAL] - inverter_modbus_address is in new data
+2022-09-15 10:00:20,249 - read - [CRITICAL] - modbus_version is in new data
+2022-09-15 10:00:20,249 - read - [CRITICAL] - pv1_voltage_adjust is in new data
+2022-09-15 10:00:20,250 - read - [CRITICAL] - pv2_voltage_adjust is in new data
+2022-09-15 10:00:20,251 - read - [CRITICAL] - grid_r_voltage_adjust is in new data
+2022-09-15 10:00:20,252 - read - [CRITICAL] - grid_s_voltage_adjust is in new data
+2022-09-15 10:00:20,253 - read - [CRITICAL] - grid_t_voltage_adjust is in new data
+2022-09-15 10:00:20,253 - read - [CRITICAL] - grid_power_adjust is in new data
+2022-09-15 10:00:20,253 - read - [CRITICAL] - battery_voltage_adjust is in new data
+2022-09-15 10:00:20,254 - read - [CRITICAL] - pv1_power_adjust is in new data
+2022-09-15 10:00:20,255 - read - [CRITICAL] - pv2_power_adjust is in new data
+2022-09-15 10:00:20,255 - read - [CRITICAL] - system_time is in new data
+2022-09-15 10:00:20,255 - read - [CRITICAL] - active_power_rate is in new data
+2022-09-15 10:00:20,256 - read - [CRITICAL] - reactive_power_rate is in new data
+2022-09-15 10:00:20,257 - read - [CRITICAL] - power_factor is in new data
+2022-09-15 10:00:20,257 - read - [CRITICAL] - inverter_state is in new data
+2022-09-15 10:00:20,258 - read - [CRITICAL] - inverter_start_time is in new data
+2022-09-15 10:00:20,258 - read - [CRITICAL] - inverter_restart_delay_time is in new data
+2022-09-15 10:00:20,259 - read - [CRITICAL] - dci_1_i is in new data
+2022-09-15 10:00:20,261 - read - [CRITICAL] - dci_1_time is in new data
+2022-09-15 10:00:20,262 - read - [CRITICAL] - dci_2_i is in new data
+2022-09-15 10:00:20,263 - read - [CRITICAL] - dci_2_time is in new data
+2022-09-15 10:00:20,264 - read - [CRITICAL] - f_ac_high_c is in new data
+2022-09-15 10:00:20,264 - read - [CRITICAL] - f_ac_high_in is in new data
+2022-09-15 10:00:20,265 - read - [CRITICAL] - f_ac_high_in_time is in new data
+2022-09-15 10:00:20,265 - read - [CRITICAL] - f_ac_high_out is in new data
+2022-09-15 10:00:20,266 - read - [CRITICAL] - f_ac_high_out_time is in new data
+2022-09-15 10:00:20,266 - read - [CRITICAL] - f_ac_low_c is in new data
+2022-09-15 10:00:20,267 - read - [CRITICAL] - f_ac_low_in is in new data
+2022-09-15 10:00:20,267 - read - [CRITICAL] - f_ac_low_in_time is in new data
+2022-09-15 10:00:20,268 - read - [CRITICAL] - f_ac_low_out is in new data
+2022-09-15 10:00:20,268 - read - [CRITICAL] - f_ac_low_out_time is in new data
+2022-09-15 10:00:20,269 - read - [CRITICAL] - gfci_1_i is in new data
+2022-09-15 10:00:20,270 - read - [CRITICAL] - gfci_1_time is in new data
+2022-09-15 10:00:20,270 - read - [CRITICAL] - gfci_2_i is in new data
+2022-09-15 10:00:20,270 - read - [CRITICAL] - gfci_2_time is in new data
+2022-09-15 10:00:20,271 - read - [CRITICAL] - v_ac_high_c is in new data
+2022-09-15 10:00:20,271 - read - [CRITICAL] - v_ac_high_in is in new data
+2022-09-15 10:00:20,272 - read - [CRITICAL] - v_ac_high_in_time is in new data
+2022-09-15 10:00:20,272 - read - [CRITICAL] - v_ac_high_out is in new data
+2022-09-15 10:00:20,273 - read - [CRITICAL] - v_ac_high_out_time is in new data
+2022-09-15 10:00:20,274 - read - [CRITICAL] - v_ac_low_c is in new data
+2022-09-15 10:00:20,274 - read - [CRITICAL] - v_ac_low_in is in new data
+2022-09-15 10:00:20,276 - read - [CRITICAL] - v_ac_low_in_time is in new data
+2022-09-15 10:00:20,276 - read - [CRITICAL] - v_ac_low_out is in new data
+2022-09-15 10:00:20,277 - read - [CRITICAL] - v_ac_low_out_time is in new data
+2022-09-15 10:00:20,278 - read - [CRITICAL] - first_battery_serial_number is in new data
+2022-09-15 10:00:20,278 - read - [CRITICAL] - first_battery_bms_firmware_version is in new data
+2022-09-15 10:00:20,279 - read - [CRITICAL] - enable_bms_read is in new data
+2022-09-15 10:00:20,279 - read - [CRITICAL] - battery_type is in new data
+2022-09-15 10:00:20,280 - read - [CRITICAL] - battery_nominal_capacity is in new data
+2022-09-15 10:00:20,280 - read - [CRITICAL] - enable_auto_judge_battery_type is in new data
+2022-09-15 10:00:20,281 - read - [CRITICAL] - v_pv_input_start is in new data
+2022-09-15 10:00:20,281 - read - [CRITICAL] - v_battery_under_protection_limit is in new data
+2022-09-15 10:00:20,282 - read - [CRITICAL] - v_battery_over_protection_limit is in new data
+2022-09-15 10:00:20,283 - read - [CRITICAL] - enable_discharge is in new data
+2022-09-15 10:00:20,283 - read - [CRITICAL] - enable_charge is in new data
+2022-09-15 10:00:20,284 - read - [CRITICAL] - enable_charge_target is in new data
+2022-09-15 10:00:20,285 - read - [CRITICAL] - battery_power_mode is in new data
+2022-09-15 10:00:20,285 - read - [CRITICAL] - soc_force_adjust is in new data
+2022-09-15 10:00:20,285 - read - [CRITICAL] - charge_slot_1 is in new data
+2022-09-15 10:00:20,286 - read - [CRITICAL] - charge_slot_2 is in new data
+2022-09-15 10:00:20,288 - read - [CRITICAL] - discharge_slot_1 is in new data
+2022-09-15 10:00:20,289 - read - [CRITICAL] - discharge_slot_2 is in new data
+2022-09-15 10:00:20,290 - read - [CRITICAL] - charge_and_discharge_soc is in new data
+2022-09-15 10:00:20,290 - read - [CRITICAL] - battery_low_force_charge_time is in new data
+2022-09-15 10:00:20,291 - read - [CRITICAL] - battery_soc_reserve is in new data
+2022-09-15 10:00:20,292 - read - [CRITICAL] - battery_charge_limit is in new data
+2022-09-15 10:00:20,293 - read - [CRITICAL] - battery_discharge_limit is in new data
+2022-09-15 10:00:20,294 - read - [CRITICAL] - island_check_continue is in new data
+2022-09-15 10:00:20,295 - read - [CRITICAL] - battery_discharge_min_power_reserve is in new data
+2022-09-15 10:00:20,295 - read - [CRITICAL] - charge_target_soc is in new data
+2022-09-15 10:00:20,295 - read - [CRITICAL] - charge_soc_stop_2 is in new data
+2022-09-15 10:00:20,296 - read - [CRITICAL] - discharge_soc_stop_2 is in new data
+2022-09-15 10:00:20,296 - read - [CRITICAL] - charge_soc_stop_1 is in new data
+2022-09-15 10:00:20,297 - read - [CRITICAL] - discharge_soc_stop_1 is in new data
+2022-09-15 10:00:20,297 - read - [CRITICAL] - inverter_status is in new data
+2022-09-15 10:00:20,298 - read - [CRITICAL] - system_mode is in new data
+2022-09-15 10:00:20,299 - read - [CRITICAL] - inverter_countdown is in new data
+2022-09-15 10:00:20,299 - read - [CRITICAL] - charge_status is in new data
+2022-09-15 10:00:20,299 - read - [CRITICAL] - battery_percent is in new data
+2022-09-15 10:00:20,299 - read - [CRITICAL] - charger_warning_code is in new data
+2022-09-15 10:00:20,300 - read - [CRITICAL] - work_time_total is in new data
+2022-09-15 10:00:20,301 - read - [CRITICAL] - fault_code is in new data
+2022-09-15 10:00:20,302 - read - [CRITICAL] - e_battery_charge_day is in new data
+2022-09-15 10:00:20,302 - read - [CRITICAL] - e_battery_charge_day_2 is in new data
+2022-09-15 10:00:20,303 - read - [CRITICAL] - e_battery_charge_total is in new data
+2022-09-15 10:00:20,303 - read - [CRITICAL] - e_battery_discharge_day is in new data
+2022-09-15 10:00:20,304 - read - [CRITICAL] - e_battery_discharge_day_2 is in new data
+2022-09-15 10:00:20,304 - read - [CRITICAL] - e_battery_discharge_total is in new data
+2022-09-15 10:00:20,305 - read - [CRITICAL] - e_battery_throughput_total is in new data
+2022-09-15 10:00:20,305 - read - [CRITICAL] - e_discharge_year is in new data
+2022-09-15 10:00:20,306 - read - [CRITICAL] - e_inverter_out_day is in new data
+2022-09-15 10:00:20,306 - read - [CRITICAL] - e_inverter_out_total is in new data
+2022-09-15 10:00:20,306 - read - [CRITICAL] - e_grid_out_day is in new data
+2022-09-15 10:00:20,306 - read - [CRITICAL] - e_grid_in_day is in new data
+2022-09-15 10:00:20,307 - read - [CRITICAL] - e_grid_in_total is in new data
+2022-09-15 10:00:20,309 - read - [CRITICAL] - e_grid_out_total is in new data
+2022-09-15 10:00:20,309 - read - [CRITICAL] - e_inverter_in_day is in new data
+2022-09-15 10:00:20,311 - read - [CRITICAL] - e_inverter_in_total is in new data
+2022-09-15 10:00:20,312 - read - [CRITICAL] - e_pv1_day is in new data
+2022-09-15 10:00:20,313 - read - [CRITICAL] - e_pv2_day is in new data
+2022-09-15 10:00:20,313 - read - [CRITICAL] - e_solar_diverter is in new data
+2022-09-15 10:00:20,313 - read - [CRITICAL] - f_ac1 is in new data
+2022-09-15 10:00:20,314 - read - [CRITICAL] - f_eps_backup is in new data
+2022-09-15 10:00:20,314 - read - [CRITICAL] - i_ac1 is in new data
+2022-09-15 10:00:20,315 - read - [CRITICAL] - i_battery is in new data
+2022-09-15 10:00:20,316 - read - [CRITICAL] - i_grid_port is in new data
+2022-09-15 10:00:20,316 - read - [CRITICAL] - i_pv1 is in new data
+2022-09-15 10:00:20,316 - read - [CRITICAL] - i_pv2 is in new data
+2022-09-15 10:00:20,317 - read - [CRITICAL] - p_battery is in new data
+2022-09-15 10:00:20,317 - read - [CRITICAL] - p_eps_backup is in new data
+2022-09-15 10:00:20,318 - read - [CRITICAL] - p_grid_apparent is in new data
+2022-09-15 10:00:20,318 - read - [CRITICAL] - p_grid_out is in new data
+2022-09-15 10:00:20,318 - read - [CRITICAL] - p_inverter_out is in new data
+2022-09-15 10:00:20,319 - read - [CRITICAL] - p_load_demand is in new data
+2022-09-15 10:00:20,320 - read - [CRITICAL] - p_pv1 is in new data
+2022-09-15 10:00:20,321 - read - [CRITICAL] - p_pv2 is in new data
+2022-09-15 10:00:20,321 - read - [CRITICAL] - e_pv_total is in new data
+2022-09-15 10:00:20,322 - read - [CRITICAL] - pf_inverter_out is in new data
+2022-09-15 10:00:20,322 - read - [CRITICAL] - temp_battery is in new data
+2022-09-15 10:00:20,323 - read - [CRITICAL] - temp_charger is in new data
+2022-09-15 10:00:20,323 - read - [CRITICAL] - temp_inverter_heatsink is in new data
+2022-09-15 10:00:20,324 - read - [CRITICAL] - v_ac1 is in new data
+2022-09-15 10:00:20,325 - read - [CRITICAL] - v_battery is in new data
+2022-09-15 10:00:20,325 - read - [CRITICAL] - v_eps_backup is in new data
+2022-09-15 10:00:20,326 - read - [CRITICAL] - v_highbrigh_bus is in new data
+2022-09-15 10:00:20,326 - read - [CRITICAL] - v_n_bus is in new data
+2022-09-15 10:00:20,327 - read - [CRITICAL] - v_p_bus is in new data
+2022-09-15 10:00:20,328 - read - [CRITICAL] - v_pv1 is in new data
+2022-09-15 10:00:20,328 - read - [CRITICAL] - v_pv2 is in new data
+2022-09-15 10:00:20,332 - read - [CRITICAL] - inverter_model is in new data
+2022-09-15 10:00:20,333 - read - [CRITICAL] - firmware_version is in new data
+2022-09-15 10:00:57,751 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 10:00:57,753 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 10:01:05,245 - read - [CRITICAL] - Battery_Serial_Number is missing from new data
+2022-09-15 10:01:05,246 - read - [CRITICAL] - Battery_SOC is missing from new data
+2022-09-15 10:01:05,246 - read - [CRITICAL] - Battery_Capacity is missing from new data
+2022-09-15 10:01:05,247 - read - [CRITICAL] - Battery_Design_Capacity is missing from new data
+2022-09-15 10:01:05,247 - read - [CRITICAL] - Battery_Remaining_Capacity is missing from new data
+2022-09-15 10:01:05,248 - read - [CRITICAL] - Battery_Firmware_Version is missing from new data
+2022-09-15 10:01:05,248 - read - [CRITICAL] - Battery_Cells is missing from new data
+2022-09-15 10:01:05,249 - read - [CRITICAL] - Battery_Cycles is missing from new data
+2022-09-15 10:01:05,249 - read - [CRITICAL] - Battery_USB_present is missing from new data
+2022-09-15 10:01:05,250 - read - [CRITICAL] - Battery_Temperature is missing from new data
+2022-09-15 10:01:05,250 - read - [CRITICAL] - Battery_Voltage is missing from new data
+2022-09-15 10:01:05,251 - read - [CRITICAL] - Battery_Cell_1_Voltage is missing from new data
+2022-09-15 10:01:05,251 - read - [CRITICAL] - Battery_Cell_2_Voltage is missing from new data
+2022-09-15 10:01:05,252 - read - [CRITICAL] - Battery_Cell_3_Voltage is missing from new data
+2022-09-15 10:01:05,253 - read - [CRITICAL] - Battery_Cell_4_Voltage is missing from new data
+2022-09-15 10:01:05,253 - read - [CRITICAL] - Battery_Cell_5_Voltage is missing from new data
+2022-09-15 10:01:05,254 - read - [CRITICAL] - Battery_Cell_6_Voltage is missing from new data
+2022-09-15 10:01:05,254 - read - [CRITICAL] - Battery_Cell_7_Voltage is missing from new data
+2022-09-15 10:01:05,255 - read - [CRITICAL] - Battery_Cell_8_Voltage is missing from new data
+2022-09-15 10:01:05,255 - read - [CRITICAL] - Battery_Cell_9_Voltage is missing from new data
+2022-09-15 10:01:05,256 - read - [CRITICAL] - Battery_Cell_10_Voltage is missing from new data
+2022-09-15 10:01:05,256 - read - [CRITICAL] - Battery_Cell_11_Voltage is missing from new data
+2022-09-15 10:01:05,257 - read - [CRITICAL] - Battery_Cell_12_Voltage is missing from new data
+2022-09-15 10:01:05,257 - read - [CRITICAL] - Battery_Cell_13_Voltage is missing from new data
+2022-09-15 10:01:05,258 - read - [CRITICAL] - Battery_Cell_14_Voltage is missing from new data
+2022-09-15 10:01:05,258 - read - [CRITICAL] - Battery_Cell_15_Voltage is missing from new data
+2022-09-15 10:01:05,259 - read - [CRITICAL] - Battery_Cell_16_Voltage is missing from new data
+2022-09-15 10:01:05,259 - read - [CRITICAL] - Battery_Cell_1_Temperature is missing from new data
+2022-09-15 10:01:05,260 - read - [CRITICAL] - Battery_Cell_2_Temperature is missing from new data
+2022-09-15 10:01:05,261 - read - [CRITICAL] - Battery_Cell_3_Temperature is missing from new data
+2022-09-15 10:01:05,261 - read - [CRITICAL] - Battery_Cell_4_Temperature is missing from new data
+2022-09-15 10:01:05,262 - read - [CRITICAL] - Battery_Serial_Number is missing from new data
+2022-09-15 10:01:05,263 - read - [CRITICAL] - Battery_SOC is missing from new data
+2022-09-15 10:01:05,263 - read - [CRITICAL] - Battery_Capacity is missing from new data
+2022-09-15 10:01:05,264 - read - [CRITICAL] - Battery_Design_Capacity is missing from new data
+2022-09-15 10:01:05,264 - read - [CRITICAL] - Battery_Remaining_Capacity is missing from new data
+2022-09-15 10:01:05,265 - read - [CRITICAL] - Battery_Firmware_Version is missing from new data
+2022-09-15 10:01:05,265 - read - [CRITICAL] - Battery_Cells is missing from new data
+2022-09-15 10:01:05,266 - read - [CRITICAL] - Battery_Cycles is missing from new data
+2022-09-15 10:01:05,266 - read - [CRITICAL] - Battery_USB_present is missing from new data
+2022-09-15 10:01:05,267 - read - [CRITICAL] - Battery_Temperature is missing from new data
+2022-09-15 10:01:05,268 - read - [CRITICAL] - Battery_Voltage is missing from new data
+2022-09-15 10:01:05,268 - read - [CRITICAL] - Battery_Cell_1_Voltage is missing from new data
+2022-09-15 10:01:05,269 - read - [CRITICAL] - Battery_Cell_2_Voltage is missing from new data
+2022-09-15 10:01:05,269 - read - [CRITICAL] - Battery_Cell_3_Voltage is missing from new data
+2022-09-15 10:01:05,270 - read - [CRITICAL] - Battery_Cell_4_Voltage is missing from new data
+2022-09-15 10:01:05,270 - read - [CRITICAL] - Battery_Cell_5_Voltage is missing from new data
+2022-09-15 10:01:05,271 - read - [CRITICAL] - Battery_Cell_6_Voltage is missing from new data
+2022-09-15 10:01:05,271 - read - [CRITICAL] - Battery_Cell_7_Voltage is missing from new data
+2022-09-15 10:01:05,272 - read - [CRITICAL] - Battery_Cell_8_Voltage is missing from new data
+2022-09-15 10:01:05,273 - read - [CRITICAL] - Battery_Cell_9_Voltage is missing from new data
+2022-09-15 10:01:05,273 - read - [CRITICAL] - Battery_Cell_10_Voltage is missing from new data
+2022-09-15 10:01:05,274 - read - [CRITICAL] - Battery_Cell_11_Voltage is missing from new data
+2022-09-15 10:01:05,275 - read - [CRITICAL] - Battery_Cell_12_Voltage is missing from new data
+2022-09-15 10:01:05,276 - read - [CRITICAL] - Battery_Cell_13_Voltage is missing from new data
+2022-09-15 10:01:05,277 - read - [CRITICAL] - Battery_Cell_14_Voltage is missing from new data
+2022-09-15 10:01:05,277 - read - [CRITICAL] - Battery_Cell_15_Voltage is missing from new data
+2022-09-15 10:01:05,278 - read - [CRITICAL] - Battery_Cell_16_Voltage is missing from new data
+2022-09-15 10:01:05,279 - read - [CRITICAL] - Battery_Cell_1_Temperature is missing from new data
+2022-09-15 10:01:05,279 - read - [CRITICAL] - Battery_Cell_2_Temperature is missing from new data
+2022-09-15 10:01:05,280 - read - [CRITICAL] - Battery_Cell_3_Temperature is missing from new data
+2022-09-15 10:01:05,280 - read - [CRITICAL] - Battery_Cell_4_Temperature is missing from new data
+2022-09-15 10:02:48,910 - read - [CRITICAL] - Battery BG2045G040 added
+2022-09-15 10:02:48,911 - read - [CRITICAL] - Battery DY2218G498 added
+2022-09-15 10:03:07,083 - read - [CRITICAL] - Battery_Details is missing from new data
+2022-09-15 10:03:07,084 - read - [CRITICAL] - BG2045G040 is missing from new data
+2022-09-15 10:03:07,085 - read - [CRITICAL] - Battery_Serial_Number is missing from new data
+2022-09-15 10:03:07,086 - read - [CRITICAL] - Battery_SOC is missing from new data
+2022-09-15 10:03:07,087 - read - [CRITICAL] - Battery_Capacity is missing from new data
+2022-09-15 10:03:07,088 - read - [CRITICAL] - Battery_Design_Capacity is missing from new data
+2022-09-15 10:03:07,088 - read - [CRITICAL] - Battery_Remaining_Capacity is missing from new data
+2022-09-15 10:03:07,089 - read - [CRITICAL] - Battery_Firmware_Version is missing from new data
+2022-09-15 10:03:07,089 - read - [CRITICAL] - Battery_Cells is missing from new data
+2022-09-15 10:03:07,090 - read - [CRITICAL] - Battery_Cycles is missing from new data
+2022-09-15 10:03:07,097 - read - [CRITICAL] - Battery_USB_present is missing from new data
+2022-09-15 10:03:07,098 - read - [CRITICAL] - Battery_Temperature is missing from new data
+2022-09-15 10:03:07,098 - read - [CRITICAL] - Battery_Voltage is missing from new data
+2022-09-15 10:03:07,098 - read - [CRITICAL] - Battery_Cell_1_Voltage is missing from new data
+2022-09-15 10:03:07,099 - read - [CRITICAL] - Battery_Cell_2_Voltage is missing from new data
+2022-09-15 10:03:07,100 - read - [CRITICAL] - Battery_Cell_3_Voltage is missing from new data
+2022-09-15 10:03:07,100 - read - [CRITICAL] - Battery_Cell_4_Voltage is missing from new data
+2022-09-15 10:03:07,101 - read - [CRITICAL] - Battery_Cell_5_Voltage is missing from new data
+2022-09-15 10:03:07,102 - read - [CRITICAL] - Battery_Cell_6_Voltage is missing from new data
+2022-09-15 10:03:07,102 - read - [CRITICAL] - Battery_Cell_7_Voltage is missing from new data
+2022-09-15 10:03:07,103 - read - [CRITICAL] - Battery_Cell_8_Voltage is missing from new data
+2022-09-15 10:03:07,103 - read - [CRITICAL] - Battery_Cell_9_Voltage is missing from new data
+2022-09-15 10:03:07,103 - read - [CRITICAL] - Battery_Cell_10_Voltage is missing from new data
+2022-09-15 10:03:07,104 - read - [CRITICAL] - Battery_Cell_11_Voltage is missing from new data
+2022-09-15 10:03:07,104 - read - [CRITICAL] - Battery_Cell_12_Voltage is missing from new data
+2022-09-15 10:03:07,105 - read - [CRITICAL] - Battery_Cell_13_Voltage is missing from new data
+2022-09-15 10:03:07,106 - read - [CRITICAL] - Battery_Cell_14_Voltage is missing from new data
+2022-09-15 10:03:07,106 - read - [CRITICAL] - Battery_Cell_15_Voltage is missing from new data
+2022-09-15 10:03:07,106 - read - [CRITICAL] - Battery_Cell_16_Voltage is missing from new data
+2022-09-15 10:03:07,107 - read - [CRITICAL] - Battery_Cell_1_Temperature is missing from new data
+2022-09-15 10:03:07,107 - read - [CRITICAL] - Battery_Cell_2_Temperature is missing from new data
+2022-09-15 10:03:07,108 - read - [CRITICAL] - Battery_Cell_3_Temperature is missing from new data
+2022-09-15 10:03:07,108 - read - [CRITICAL] - Battery_Cell_4_Temperature is missing from new data
+2022-09-15 10:03:07,109 - read - [CRITICAL] - DY2218G498 is missing from new data
+2022-09-15 10:03:07,109 - read - [CRITICAL] - Battery_Serial_Number is missing from new data
+2022-09-15 10:03:07,110 - read - [CRITICAL] - Battery_SOC is missing from new data
+2022-09-15 10:03:07,110 - read - [CRITICAL] - Battery_Capacity is missing from new data
+2022-09-15 10:03:07,111 - read - [CRITICAL] - Battery_Design_Capacity is missing from new data
+2022-09-15 10:03:07,112 - read - [CRITICAL] - Battery_Remaining_Capacity is missing from new data
+2022-09-15 10:03:07,113 - read - [CRITICAL] - Battery_Firmware_Version is missing from new data
+2022-09-15 10:03:07,113 - read - [CRITICAL] - Battery_Cells is missing from new data
+2022-09-15 10:03:07,114 - read - [CRITICAL] - Battery_Cycles is missing from new data
+2022-09-15 10:03:07,114 - read - [CRITICAL] - Battery_USB_present is missing from new data
+2022-09-15 10:03:07,115 - read - [CRITICAL] - Battery_Temperature is missing from new data
+2022-09-15 10:03:07,116 - read - [CRITICAL] - Battery_Voltage is missing from new data
+2022-09-15 10:03:07,116 - read - [CRITICAL] - Battery_Cell_1_Voltage is missing from new data
+2022-09-15 10:03:07,117 - read - [CRITICAL] - Battery_Cell_2_Voltage is missing from new data
+2022-09-15 10:03:07,117 - read - [CRITICAL] - Battery_Cell_3_Voltage is missing from new data
+2022-09-15 10:03:07,118 - read - [CRITICAL] - Battery_Cell_4_Voltage is missing from new data
+2022-09-15 10:03:07,121 - read - [CRITICAL] - Battery_Cell_5_Voltage is missing from new data
+2022-09-15 10:03:07,122 - read - [CRITICAL] - Battery_Cell_6_Voltage is missing from new data
+2022-09-15 10:03:07,123 - read - [CRITICAL] - Battery_Cell_7_Voltage is missing from new data
+2022-09-15 10:03:07,123 - read - [CRITICAL] - Battery_Cell_8_Voltage is missing from new data
+2022-09-15 10:03:07,124 - read - [CRITICAL] - Battery_Cell_9_Voltage is missing from new data
+2022-09-15 10:03:07,124 - read - [CRITICAL] - Battery_Cell_10_Voltage is missing from new data
+2022-09-15 10:03:07,125 - read - [CRITICAL] - Battery_Cell_11_Voltage is missing from new data
+2022-09-15 10:03:07,125 - read - [CRITICAL] - Battery_Cell_12_Voltage is missing from new data
+2022-09-15 10:03:07,125 - read - [CRITICAL] - Battery_Cell_13_Voltage is missing from new data
+2022-09-15 10:03:07,126 - read - [CRITICAL] - Battery_Cell_14_Voltage is missing from new data
+2022-09-15 10:03:07,127 - read - [CRITICAL] - Battery_Cell_15_Voltage is missing from new data
+2022-09-15 10:03:07,133 - read - [CRITICAL] - Battery_Cell_16_Voltage is missing from new data
+2022-09-15 10:03:07,136 - read - [CRITICAL] - Battery_Cell_1_Temperature is missing from new data
+2022-09-15 10:03:07,138 - read - [CRITICAL] - Battery_Cell_2_Temperature is missing from new data
+2022-09-15 10:03:07,144 - read - [CRITICAL] - Battery_Cell_3_Temperature is missing from new data
+2022-09-15 10:03:07,146 - read - [CRITICAL] - Battery_Cell_4_Temperature is missing from new data
+2022-09-15 19:12:47,470 - GivLUT - [CRITICAL] - Consecutive failure count= 1
+2022-09-15 19:12:47,479 - read - [ERROR] - Error processing registers: (<class 'TypeError'>, TypeError('strptime() takes no keyword arguments'), <traceback object at 0x000001D5D33D3BC0>)
+2022-09-15 19:12:47,480 - read - [ERROR] - Invertor Update failed so using last known good data from cache (2022-09-15T18:10:57.730114+00:00)
+2022-09-15 19:12:54,182 - GivLUT - [CRITICAL] - Consecutive failure count= 2
+2022-09-15 19:12:54,184 - read - [ERROR] - Error processing registers: (<class 'TypeError'>, TypeError('strptime() takes no keyword arguments'), <traceback object at 0x000001D5D3484D80>)
+2022-09-15 19:12:54,185 - read - [ERROR] - Invertor Update failed so using last known good data from cache (2022-09-15T18:12:47.465880+00:00)
+2022-09-15 19:19:30,022 - read - [CRITICAL] - New data is consistent with previous so storing in regCache
+2022-09-16 08:35:08,551 - read - [ERROR] - Lockfile set so aborting getData
+2022-09-16 08:35:09,696 - read - [ERROR] - Lockfile set so aborting getData
+2022-09-16 08:35:15,971 - read - [ERROR] - Lockfile set so aborting getData
+2022-09-16 08:37:36,182 - read - [CRITICAL] - DY2218G498 is missing from new data
+2022-09-16 08:37:36,184 - read - [CRITICAL] - Battery_Cell_5_Voltage is missing from new data
+2022-09-16 08:37:36,184 - read - [CRITICAL] - Battery_Cell_7_Voltage is missing from new data
+2022-09-16 08:37:36,185 - read - [CRITICAL] - Battery_SOC is missing from new data
+2022-09-16 08:37:36,185 - read - [CRITICAL] - Battery_Cell_8_Voltage is missing from new data
+2022-09-16 08:37:36,186 - read - [CRITICAL] - Battery_Cell_1_Voltage is missing from new data
+2022-09-16 08:37:36,186 - read - [CRITICAL] - Battery_Cell_6_Voltage is missing from new data
+2022-09-16 08:37:36,187 - read - [CRITICAL] - BG2045G040 is missing from new data
+2022-09-16 08:37:36,187 - read - [CRITICAL] - Battery_Cell_2_Temperature is missing from new data
+2022-09-16 08:37:36,188 - read - [CRITICAL] - Battery_Cell_3_Temperature is missing from new data
+2022-09-16 08:37:36,188 - read - [CRITICAL] - Battery_Cell_13_Voltage is missing from new data
+2022-09-16 08:37:36,189 - read - [CRITICAL] - Battery_Firmware_Version is missing from new data
+2022-09-16 08:37:36,190 - read - [CRITICAL] - Battery_Remaining_Capacity is missing from new data
+2022-09-16 08:37:36,191 - read - [CRITICAL] - Battery_Cell_11_Voltage is missing from new data
+2022-09-16 08:37:36,191 - read - [CRITICAL] - Battery_Capacity is missing from new data
+2022-09-16 08:37:36,192 - read - [CRITICAL] - Battery_Cycles is missing from new data
+2022-09-16 08:37:36,192 - read - [CRITICAL] - Battery_Voltage is missing from new data
+2022-09-16 08:37:36,193 - read - [CRITICAL] - Battery_Cell_15_Voltage is missing from new data
+2022-09-16 08:37:36,193 - read - [CRITICAL] - Battery_Design_Capacity is missing from new data
+2022-09-16 08:37:36,194 - read - [CRITICAL] - Battery_Cell_16_Voltage is missing from new data
+2022-09-16 08:37:36,200 - read - [CRITICAL] - Battery_Temperature is missing from new data
+2022-09-16 08:37:36,200 - read - [CRITICAL] - Battery_Cell_4_Voltage is missing from new data
+2022-09-16 08:37:36,201 - read - [CRITICAL] - Battery_Cells is missing from new data
+2022-09-16 08:37:36,201 - read - [CRITICAL] - Battery_Cell_3_Voltage is missing from new data
+2022-09-16 08:37:36,202 - read - [CRITICAL] - Battery_USB_present is missing from new data
+2022-09-16 08:37:36,202 - read - [CRITICAL] - Battery_Details is missing from new data
+2022-09-16 08:37:36,203 - read - [CRITICAL] - Battery_Cell_12_Voltage is missing from new data
+2022-09-16 08:37:36,203 - read - [CRITICAL] - Battery_Cell_9_Voltage is missing from new data
+2022-09-16 08:37:36,204 - read - [CRITICAL] - Battery_Cell_1_Temperature is missing from new data
+2022-09-16 08:37:36,205 - read - [CRITICAL] - Battery_Cell_10_Voltage is missing from new data
+2022-09-16 08:37:36,205 - read - [CRITICAL] - Battery_Serial_Number is missing from new data
+2022-09-16 08:37:36,205 - read - [CRITICAL] - Battery_Cell_14_Voltage is missing from new data
+2022-09-16 08:37:36,207 - read - [CRITICAL] - Battery_Cell_2_Voltage is missing from new data
+2022-09-16 08:37:36,208 - read - [CRITICAL] - Battery_Cell_4_Temperature is missing from new data
+2022-09-16 10:24:48,285 - read - [CRITICAL] - New data is consistent with previous so storing in regCache
+2022-09-16 10:25:13,521 - read - [CRITICAL] - New data is consistent with previous so storing in regCache
+2022-09-16 10:25:24,889 - read - [CRITICAL] - New data is consistent with previous so storing in regCache
+2022-09-16 10:25:34,982 - read - [CRITICAL] - New data is consistent with previous so storing in regCache
+2022-09-16 10:25:41,461 - read - [CRITICAL] - New data is consistent with previous so storing in regCache
+2022-09-16 10:26:55,109 - read - [CRITICAL] - New data is consistent with previous so storing in regCache
+2022-09-16 10:28:13,413 - read - [CRITICAL] - New data is consistent with previous so storing in regCache
+2022-09-16 10:31:34,130 - read - [CRITICAL] - New data is consistent with previous so storing in regCache
+2022-09-16 10:32:40,354 - read - [CRITICAL] - New data is consistent with previous so storing in regCache
+2022-09-16 10:34:16,754 - read - [CRITICAL] - New data is consistent with previous so storing in regCache
+2022-09-16 10:35:37,999 - read - [CRITICAL] - New data is consistent with previous so storing in regCache
+2022-09-16 10:36:52,564 - read - [CRITICAL] - DY2218G498 has no data in the cache so using new value.
+2022-09-16 10:38:00,597 - read - [CRITICAL] - DY2218G498 is not found in both new and old data
+2022-09-16 10:38:00,598 - read - [CRITICAL] - New data is different, so not saving into regCacheStack
+2022-09-16 10:38:00,599 - GivLUT - [CRITICAL] - Consecutive failure count= 1
+2022-09-16 10:38:00,601 - read - [ERROR] - Error processing registers: (<class 'Exception'>, Exception('Missing data from new data'), <traceback object at 0x000002AF3D776E40>)
+2022-09-16 10:38:00,601 - read - [ERROR] - Invertor Update failed so using last known good data from cache (2022-09-16T09:35:49.424522+00:00)
+2022-09-16 10:38:35,134 - read - [CRITICAL] - DY2218G498 has no data in the cache so using new value.
+2022-09-16 10:40:55,278 - read - [CRITICAL] - DY2218G498 has no data in the cache so using new value.
+2022-09-16 10:42:55,993 - read - [ERROR] - Lockfile set so aborting getData
+2022-09-16 10:42:57,084 - read - [ERROR] - Lockfile set so aborting getData
+2022-09-16 10:43:03,174 - read - [ERROR] - Lockfile set so aborting getData
+2022-09-16 10:43:14,826 - read - [CRITICAL] - DY2218G498 has no data in the cache so using new value.
+2022-09-16 10:44:18,664 - GivLUT - [CRITICAL] - Consecutive failure count= 1
+2022-09-16 10:44:18,668 - read - [ERROR] - Error collecting registers: (<class 'KeyError'>, KeyError(HR:013), <traceback object at 0x000002013EBA96C0>)
+2022-09-16 10:44:29,539 - GivLUT - [CRITICAL] - Consecutive failure count= 2
+2022-09-16 10:44:29,544 - read - [ERROR] - Error collecting registers: (<class 'KeyError'>, KeyError(HR:113), <traceback object at 0x000001D1DAEB59C0>)
+2022-09-16 10:44:34,450 - GivLUT - [CRITICAL] - Consecutive failure count= 3
+2022-09-16 10:44:34,454 - read - [ERROR] - Error collecting registers: (<class 'KeyError'>, KeyError(HR:013), <traceback object at 0x000001D1DAEB7B80>)
+2022-09-16 10:45:46,756 - read - [CRITICAL] - DY2218G498 is missing from new data

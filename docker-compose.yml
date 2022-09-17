@@ -7,6 +7,7 @@ services:
       - "6345:6345"                   # REST (add increments for each invertor)
       - "3000:3000"                   # This should match the WEB_DASH_PORT ENV below
       - "6379:6379"                   # Redis for job queueing
+      - "9181:9181"                   # RQ Dashboard to view job scheduling
     environment:
 ## Critical to update
       - NUMINVERTORS=1                # Set this to the number of Invertors in your setup, then replicate the next two lines for each invertor (changing the last number of the ENV)

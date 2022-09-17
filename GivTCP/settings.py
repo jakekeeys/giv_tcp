@@ -1,7 +1,7 @@
 # version 2022.01.31
 class GiV_Settings:
     invertorIP="192.168.2.3"        #Required - IP address of Invertor on local network
-    numBatteries=1                  #Required - The number of batteries connected this invertor
+    numBatteries=2                  #Required - The number of batteries connected this invertor
     HA_Auto_D=True                  #Optional - Bool - Publishes Home assistant MQTT Auto Discovery messages to push data into HA automagically (requires MQTT to be enabled below)
     ha_device_prefix=""             #Required - This is the prefix used at the start of every Home Assistant device created
 #Debug Settings
@@ -34,3 +34,5 @@ class GiV_Settings:
     givtcp_instance=1
     cache_location="C:/Users/mark/Code-Dev/givtcp/dev/giv_tcp"
     data_smoother="High"
+    SOLCASTAPI="D3d_8yREGmXWQW4CkNK00wpeM99BlNqb"
+    SOLCASTSITEID="8760-a78f-c11e-ae49"

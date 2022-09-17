@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 from genericpath import exists
 import os, pickle, subprocess, logging,shutil, shlex, schedule
 from time import sleep
+import rq_dashboard
 
 selfRun={}
 mqttClient={}
@@ -38,6 +39,9 @@ else:
 
 redis=subprocess.Popen(["/usr/bin/redis-server","/app/redis.conf"])
 logger.critical("Running Redis")
+
+rqdash=subprocess.Popen(["/usr/local/bin/rq-dashboard"])
+logger.critical("Running RQ Dashboard on port 9181")
 
 if str(os.getenv("MQTT_OUTPUT"))=="True" and str(os.getenv("MQTT_ADDRESS"))=="127.0.0.1":
     # Run internal MQTT Broker

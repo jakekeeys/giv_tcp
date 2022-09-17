@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # version 2022.08.01
+from audioop import mul
 from ntpath import join
 import sys
 from pickletools import read_uint1
@@ -73,21 +74,7 @@ def getData(fullrefresh):      #Read from Invertor put in cache
         
         logger.info("Invertor connection successful, registers retrieved")
     except:
-        if exists(GivLUT.oldDataCount):
-            with open(GivLUT.oldDataCount, 'rb') as inp:
-                oldDataCount= pickle.load(inp)
-            oldDataCount=oldDataCount+1
-        else:
-            oldDataCount=1
-        if oldDataCount>5:
-            #5 error in a row so delete regCache data
-            logger.critical("5 failed invertor reads in a row so removing regCache to force update...")
-            os.remove(GivLUT.regcache)
-            os.remove(GivLUT.oldDataCount)
-        else:
-            with open(GivLUT.oldDataCount, 'wb') as outp:
-                pickle.dump(oldDataCount, outp, pickle.HIGHEST_PROTOCOL)
-        logger.critical("oldDataCount= "+str(oldDataCount))
+        GivLUT.consecFails()
         e = sys.exc_info()
         logger.error("Error collecting registers: " + str(e))
         temp['result']="Error collecting registers: " + str(e)
@@ -460,6 +447,7 @@ def getData(fullrefresh):      #Read from Invertor put in cache
             battery['Battery_Cell_3_Temperature'] = b.temp_battery_cells_3
             battery['Battery_Cell_4_Temperature'] = b.temp_battery_cells_4
             batteries2[b.battery_serial_number]=battery
+            logger.info("Battery "+str(b.battery_serial_number)+" added")
 
 ######## Create multioutput and publish #########
         energy={}
@@ -489,13 +477,22 @@ def getData(fullrefresh):      #Read from Invertor put in cache
             multi_output=ratecalcs(multi_output,multi_output)
 
         multi_output=calcBatteryValue(multi_output)
+        
         if 'multi_output_old' in locals(): 
             multi_output=dataCleansing(multi_output,regCacheStack[4])
+        # only update cache if its the same set of keys as previous (don't update if data missing)
 
-        #pop last value out of regcache and append this one
+        if 'multi_output_old' in locals(): 
+            MOList=dicttoList(multi_output)
+            MOOList=dicttoList(multi_output_old)
+            dataDiff=set(MOOList) - set(MOList)
+            if len(dataDiff)>0:
+                for key in dataDiff:
+                    logger.critical(str(key)+" is missing from new data, publishing all other data")
+
+        # Add new data to the stack
         regCacheStack.pop(0)
         regCacheStack.append(multi_output)
-
         # Save new data to Pickle
         with open(GivLUT.regcache, 'wb') as outp:
             pickle.dump(regCacheStack, outp, pickle.HIGHEST_PROTOCOL)
@@ -506,20 +503,7 @@ def getData(fullrefresh):      #Read from Invertor put in cache
             os.remove(GivLUT.oldDataCount)
 
     except:
-        if exists(GivLUT.oldDataCount):
-            with open(GivLUT.oldDataCount, 'rb') as inp:
-                oldDataCount= pickle.load(inp)
-            oldDataCount=oldDataCount+1
-        else:
-            oldDataCount=1
-        if oldDataCount>5:
-            #5 error in a row so delete regCache data
-            logger.critical("5 failed invertor reads in a row so removing regCache to force update...")
-            os.remove(GivLUT.regcache)
-            os.remove(GivLUT.oldDataCount)
-        else:
-            with open(GivLUT.oldDataCount, 'wb') as outp:
-                pickle.dump(oldDataCount, outp, pickle.HIGHEST_PROTOCOL)
+        GivLUT.consecFails()
         e = sys.exc_info()
         logger.error("Error processing registers: " + str(e))
         logger.error("Invertor Update failed so using last known good data from cache ("+previousUpdate+")")
@@ -531,8 +515,8 @@ def runAll(full_refresh):       #Read from Invertor put in cache and publish
     #full_refresh=True
     from read import getData
     result=GivQueue.q.enqueue(getData,full_refresh)
-    #getData(full_refresh)
-    while result.result is None:
+#    getData(full_refresh)
+    while result.result is None and result.exc_info is None:
         time.sleep(0.5)
     # Step here to validate data against previous pickle?
     multi_output=pubFromPickle()
@@ -653,6 +637,10 @@ def iterate_dict(array):        # Create a publish safe version of the output (c
 
 def ratecalcs(multi_output, multi_output_old):
     rate_data={}
+    dayRateStart=datetime.datetime.strptime(GiV_Settings.day_rate_start, '%H:%M')
+    nightRateStart=datetime.datetime.strptime(GiV_Settings.night_rate_start, '%H:%M')
+    night_start=datetime.datetime.combine(datetime.datetime.now(GivLUT.timezone).date(),nightRateStart.time()).replace(tzinfo=GivLUT.timezone)
+    day_start=datetime.datetime.combine(datetime.datetime.now(GivLUT.timezone).date(),dayRateStart.time()).replace(tzinfo=GivLUT.timezone)
     #check if pickle data exists:
     if exists(GivLUT.ratedata):
         with open(GivLUT.ratedata, 'rb') as inp:
@@ -662,7 +650,7 @@ def ratecalcs(multi_output, multi_output_old):
     import_energy_old=multi_output_old['Energy']['Total']['Import_Energy_Total_kWh']
 
     # if midnight then reset costs
-    if datetime.datetime.now().hour==0 and datetime.datetime.now().minute==0:
+    if datetime.datetime.now(GivLUT.timezone).hour==0 and datetime.datetime.now(GivLUT.timezone).minute==0:
         logger.critical("Midnight, so resetting Day/Night stats...")
         rate_data['Night_Cost']=0.00
         rate_data['Day_Cost']=0.00
@@ -672,11 +660,11 @@ def ratecalcs(multi_output, multi_output_old):
         rate_data['Night_Start_Energy_kWh']=import_energy
 
     
-    if datetime.datetime.strptime(GiV_Settings.day_rate_start, '%H:%M').hour == datetime.datetime.now().hour and datetime.datetime.strptime(GiV_Settings.day_rate_start, '%H:%M').minute == datetime.datetime.now().minute:
+    if dayRateStart.hour == datetime.datetime.now(GivLUT.timezone).hour and dayRateStart.minute == datetime.datetime.now(GivLUT.timezone).minute:
         #Save current Total stats as baseline
         logger.info("Saving current energy stats at start of day rate tariff")
         rate_data['Day_Start_Energy_kWh']=import_energy
-    elif datetime.datetime.strptime(GiV_Settings.night_rate_start, '%H:%M').hour == datetime.datetime.now().hour and datetime.datetime.strptime(GiV_Settings.night_rate_start, '%H:%M').minute == datetime.datetime.now().minute:
+    elif nightRateStart.hour == datetime.datetime.now(GivLUT.timezone).hour and nightRateStart.minute == datetime.datetime.now(GivLUT.timezone).minute:
         #Save current Total stats as baseline
         logger.info("Saving current energy stats at start of night rate tariff")
         rate_data['Night_Start_Energy_kWh']=import_energy
@@ -707,10 +695,8 @@ def ratecalcs(multi_output, multi_output_old):
 
     if import_energy>import_energy_old: # Only run if there has been more import
         logger.info("Imported more energy so calculating current tariff costs: "+str(import_energy_old)+" -> "+str(import_energy))
-        night_start=datetime.datetime.combine(datetime.datetime.now().date(),datetime.datetime.strptime(GiV_Settings.night_rate_start, '%H:%M').time())
-        day_start=datetime.datetime.combine(datetime.datetime.now().date(),datetime.datetime.strptime(GiV_Settings.day_rate_start, '%H:%M').time())
     
-        if night_start <= datetime.datetime.now() < day_start:
+        if night_start <= datetime.datetime.now(GivLUT.timezone) < day_start:
             logger.info("Current Tariff is Night, calculating stats...")
             rate_data['Night_Energy_kWh']=import_energy-rate_data['Night_Start_Energy_kWh']
             logger.info("Night_Energy_kWh=" +str(import_energy)+" - "+str(rate_data['Night_Start_Energy_kWh']))
@@ -744,6 +730,17 @@ def dataCleansing(data,regCacheStack):
     new_multi_output=loop_dict(data,regCacheStack,data["Last_Updated_Time"])
     return(new_multi_output)
 
+def dicttoList(array):
+    safeoutput=[]
+    #finaloutput={}
+    #arrayout={}
+    for p_load in array:
+        output=array[p_load]
+        safeoutput.append(p_load)
+        if isinstance(output, dict):
+            safeoutput= safeoutput+dicttoList(output)
+    return(safeoutput)
+
 def loop_dict(array, regCacheStack,lastUpdate):
     safeoutput={}
     #finaloutput={}
@@ -754,19 +751,25 @@ def loop_dict(array, regCacheStack,lastUpdate):
             safeoutput[p_load]=output
             continue
         if isinstance(output, dict):
-            temp=loop_dict(output,regCacheStack[p_load],lastUpdate)
-            safeoutput[p_load]=temp
-            logger.info('Data cleansed for: '+p_load)
+            if p_load in regCacheStack:
+                temp=loop_dict(output,regCacheStack[p_load],lastUpdate)
+                safeoutput[p_load]=temp
+                logger.info('Data cleansed for: '+str(p_load))
+            else:
+                logger.critical(str(p_load)+" has no data in the cache so using new value.")
+                safeoutput[p_load]=output
         else:
             # run datasmoother on the data item
-            # only run if new and old data exists
-            if p_load in regCacheStack and p_load in array:
+            # only run if old data exists otherwise return the existing value
+            if p_load in regCacheStack:
                 safeoutput[p_load]=dataSmoother2([p_load,output],[p_load,regCacheStack[p_load]],lastUpdate)
+            else:
+                logger.critical(p_load+" has no data in the cache so using new value.")
+                safeoutput[p_load]=output
     return(safeoutput)
 
 def dataSmoother2(dataNew, dataOld,lastUpdate):
     ### perform test to validate data and smooth out spikes
-    #dataOld=regCacheStack[4][section][batSN][name]
     newData=dataNew[1]
     oldData=dataOld[1]
     name=dataNew[0]
@@ -777,14 +780,13 @@ def dataSmoother2(dataNew, dataOld,lastUpdate):
     if isinstance(newData,int) or isinstance(newData,float):
         if oldData!=0:
             then=datetime.datetime.fromisoformat(lastUpdate)
-            now=datetime.datetime.now(then.tzinfo)
-    
+            now=datetime.datetime.now(GivLUT.timezone)
     ### Run checks against the conditions in GivLUT ###
             if now.minute==0 and now.hour==0 and "Today" in name:   #Treat Today stats as a special case
                 logger.info("Midnight and "+str(name)+" so accepting value as is")
                 return (dataNew)
             if newData<float(lookup.min) or newData>float(lookup.max):  #If outside min and max ranges
-                logger.info(str(name)+" is outside of allowable bounds so using old value")
+                logger.info(str(name)+" is outside of allowable bounds so using old value: "+str(newData))
                 return(oldData)
             if newData==0 and not lookup.allowZero: #if zero and not allowed to be
                 logger.info(str(name)+" is Zero so using old value")
@@ -802,35 +804,6 @@ def dataSmoother2(dataNew, dataOld,lastUpdate):
                     return oldData
     return(newData)
 
-def dataSmoother(dataNew, regCacheStack,name,section,batSN):
-    ### perform test to validate data and smooth out spikes
-    dataOld=regCacheStack[4][section][batSN][name]
-    lastUpdate=regCacheStack[4]["Last_Updated_Time"]
-    data=dataNew
-    if isinstance(dataNew,int) or isinstance(dataNew,float):
-        ### Remove High velocity changes
-        if dataOld!=0:
-            then=datetime.datetime.fromisoformat(lastUpdate)
-            now=datetime.datetime.now(then.tzinfo)
-            timeDelta=(now-then).total_seconds()
-            dataDelta=abs(dataNew-dataOld)/dataOld
-            if name=="Battery_Remaining_Capacity" and dataNew>float(regCacheStack["Battery_Capacity"]):
-                logger.info("Battery Remaining capacity cannot be higher than total capacity, using old value")
-                return(dataOld)
-            #Treat Today Stats as a special case
-            if dataDelta > 0.50 and timeDelta<60:
-                # if the history of values is consitenly the new value then accept it (5 concurrent values)
-                isConsistent=True
-                for i in range(4):
-                    if regCacheStack[i][section][batSN][name]!=dataOld: isConsistent=False
-                if isConsistent:
-                    logger.info(str(name)+" has consistently jumped to a new value so setting: "+str(dataOld)+" -> "+str(dataNew))
-                    return(dataNew)
-                else:
-                    logger.info(str(name)+" jumped too far in a single read: "+str(dataOld)+"->"+str(dataNew)+" so using previous value")
-                    return(dataOld)
-    return(dataNew)
-
 def calcBatteryValue(multi_output):
     #get current data from read pickle
     batterystats={}
@@ -844,7 +817,7 @@ def calcBatteryValue(multi_output):
         batterystats['Battery_ppkwh']=0
         batterystats['Battery_kWh_old']=multi_output['Power']['Power']['SOC_kWh']
 
-    if GiV_Settings.first_run or datetime.datetime.now().minute==59 or datetime.datetime.now().minute==29:
+    if GiV_Settings.first_run or datetime.datetime.now(GivLUT.timezone).minute==59 or datetime.datetime.now(GivLUT.timezone).minute==29:
         if not exists(GivLUT.ppkwhtouch) and exists(GivLUT.batterypkl):      # only run this if there is no touchfile but there is a battery stat
             battery_kwh=multi_output['Power']['Power']['SOC_kWh']
             ac_charge=float(multi_output['Energy']['Total']['AC_Charge_Energy_Total_kWh'])-float(batterystats['AC Charge last'])

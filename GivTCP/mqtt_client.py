@@ -3,7 +3,7 @@ import time, sys, importlib, time
 from os.path import exists
 from settings import GiV_Settings
 import write as wr
-import pickle
+import pickle, settings
 from GivLUT import GivQueue, GivLUT
 from pickletools import read_uint1
 

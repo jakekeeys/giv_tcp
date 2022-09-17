@@ -1,0 +1,4 @@
+2022-09-12 11:58:42,871 - GivTCP_Read_1 - [ERROR] - Error collecting registers: (<class 'KeyError'>, KeyError(HR:120), <traceback object at 0x000002B0F8D0FE00>)
+2022-09-12 11:58:42,871 - GivTCP_Read_1 - [ERROR] - Error collecting registers: (<class 'KeyError'>, KeyError(HR:120), <traceback object at 0x000002B0F8D0FE00>)
+2022-09-12 12:02:07,458 - GivTCP_Read_1 - [ERROR] - Error collecting registers: (<class 'KeyError'>, KeyError(HR:013), <traceback object at 0x000002B0F8D59E40>)
+2022-09-12 12:02:07,458 - GivTCP_Read_1 - [ERROR] - Error collecting registers: (<class 'KeyError'>, KeyError(HR:013), <traceback object at 0x000002B0F8D59E40>)
