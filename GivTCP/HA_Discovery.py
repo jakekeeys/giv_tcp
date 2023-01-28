@@ -47,7 +47,10 @@ class HAMQTT():
                 time.sleep(0.2)
                 ##publish the status message
                 client.publish(GiV_Settings.MQTT_Topic+"/"+SN+"/status","online", retain=True)
-            ### For each topic create a discovery message
+                ### For each topic create a discovery message
+
+#                if GiV_Settings.MQTT_SingleTopicMode:
+                client.publish(GiV_Settings.MQTT_Topic+"/"+SN,array, retain=True)
                 for p_load in array:
                     if p_load != "raw":
                         payload=array[p_load]
