@@ -29,6 +29,7 @@ logger = GivLUT.logger
 inverterLock = Lock()
 cacheLock = Lock()
 
+
 def getData(fullrefresh):  # Read from Invertor put in cache
     # plant=Plant(number_batteries=int(GiV_Settings.numBatteries))
     energy_total_output = {}
@@ -44,7 +45,7 @@ def getData(fullrefresh):  # Read from Invertor put in cache
     logging.info("Getting All Registers")
 
     # Connect to Invertor and load data
-########### Use a queue for the giv read and join for the output #############
+    ########### Use a queue for the giv read and join for the output #############
     try:
         logger.info("Connecting to: " + GiV_Settings.invertorIP)
 
@@ -56,10 +57,11 @@ def getData(fullrefresh):  # Read from Invertor put in cache
 
         multi_output['Last_Updated_Time'] = datetime.datetime.utcnow().replace(tzinfo=datetime.timezone.utc).isoformat()
         multi_output['status'] = "online"
+        multi_output['Time_Since_Last_Update'] = 0
 
         logger.info("Invertor connection successful, registers retrieved")
     except:
-        GivLUT.consecFails()
+        consecFails()
         e = sys.exc_info()
         logger.error("Error collecting registers: " + str(e))
         temp['result'] = "Error collecting registers: " + str(e)
@@ -513,26 +515,7 @@ def getData(fullrefresh):  # Read from Invertor put in cache
                 os.remove(GivLUT.oldDataCount)
 
     except:
-        with cacheLock:
-            if exists(GivLUT.oldDataCount):
-                with open(GivLUT.oldDataCount, 'rb') as inp:
-                    oldDataCount= pickle.load(inp)
-                oldDataCount=oldDataCount+1
-            else:
-                oldDataCount=1
-            logger.critical("Consecutive failure count= "+str(oldDataCount))
-            if oldDataCount>10:
-                #10 error in a row so delete regCache data
-                logger.critical("10 failed invertor reads in a row so removing regCache to force update...")
-                if exists(GivLUT.regcache):
-                    os.remove(GivLUT.regcache)
-                if exists(GivLUT.batterypkl):
-                    os.remove(GivLUT.batterypkl)
-                if exists(GivLUT.oldDataCount):
-                    os.remove(GivLUT.oldDataCount)
-            else:
-                with open(GivLUT.oldDataCount, 'wb') as outp:
-                    pickle.dump(oldDataCount, outp, pickle.HIGHEST_PROTOCOL)
+        consecFails()
 
         e = sys.exc_info()
         logger.error("Error processing registers: " + str(e))
@@ -540,6 +523,30 @@ def getData(fullrefresh):  # Read from Invertor put in cache
         result['result'] = "Error processing registers: " + str(e)
         return json.dumps(result)
     return json.dumps(result, indent=4, sort_keys=True, default=str)
+
+
+def consecFails():
+    with cacheLock:
+        if exists(GivLUT.oldDataCount):
+            with open(GivLUT.oldDataCount, 'rb') as inp:
+                oldDataCount= pickle.load(inp)
+            oldDataCount=oldDataCount+1
+        else:
+            oldDataCount=1
+        logger.critical("Consecutive failure count= "+str(oldDataCount))
+        if oldDataCount>10:
+            #10 error in a row so delete regCache data
+            logger.critical("10 failed invertor reads in a row so removing regCache to force update...")
+            if exists(GivLUT.regcache):
+                os.remove(GivLUT.regcache)
+            if exists(GivLUT.batterypkl):
+                os.remove(GivLUT.batterypkl)
+            if exists(GivLUT.oldDataCount):
+                os.remove(GivLUT.oldDataCount)
+        else:
+            with open(GivLUT.oldDataCount, 'wb') as outp:
+                pickle.dump(oldDataCount, outp, pickle.HIGHEST_PROTOCOL)
+
 
 
 def runAll(full_refresh):  # Read from Invertor put in cache and publish
