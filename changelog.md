@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.3] - 2023-01-23
+
+- Added "None" as a smoothing option
+- Worked on race conditions by using critical sections to replace file locks
+
 ## [2.0.1] - 2022-09-18
  
 Update to GivLUT to allow battery max power to go up to 4000w to account for Gen2 invertors
