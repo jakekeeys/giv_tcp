@@ -47,7 +47,7 @@ class HAMQTT():
                 time.sleep(0.2)
 
             logger.info("Publishing MQTT: " + HAMQTT.MQTT_Address)
-            
+
             ##publish the status message
             client.publish(GiV_Settings.MQTT_Topic+"/"+SN+"/status","online", retain=True)
 
